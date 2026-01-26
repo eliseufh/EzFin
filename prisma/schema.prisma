@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Tabela de Usuários (Profile)
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String?
+  clerkId       String?   @unique // Caso use Clerk ou NextAuth no futuro
+  whatsapp      String?   @unique // O número do ZAP (Crucial para o Bot)
+  plan          String    @default("free") // free, monthly, annual
+  currency      String    @default("EUR")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relacionamentos (O que esse usuário tem?)
+  transactions  Transaction[]
+  subscriptions Subscription[]
+  goals         Goal[]
+}
+
+// Tabela de Gastos e Receitas
+model Transaction {
+  id          String   @id @default(uuid())
+  amount      Float    // Valor da transação
+  description String   // "Energético", "Almoço"
+  category    String   @default("Outros") // Alimentação, Transporte...
+  type        String   @default("expense") // expense (gasto) ou income (ganho)
+  date        DateTime @default(now())
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Tabela de Assinaturas (Netflix, Spotify, Aluguel)
+model Subscription {
+  id          String   @id @default(uuid())
+  name        String
+  amount      Float
+  billingDay  Int      // Dia do vencimento (1 a 31)
+  active      Boolean  @default(true)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Tabela de Metas / Fundo de Emergência
+model Goal {
+  id          String   @id @default(uuid())
+  name        String   // Ex: "Viagem Japão"
+  targetAmount Float   // Quanto quer juntar
+  currentAmount Float  @default(0) // Quanto já juntou
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
