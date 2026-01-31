@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { formatCurrency } from "@/lib/utils";
 import { getEzFinUser } from "@/lib/auth-helper";
+import { checkSubscription } from "@/lib/subscription";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -41,6 +42,12 @@ export default async function DashboardPage(props: DashboardProps) {
   const user = await getEzFinUser();
   if (!user) {
     redirect("/");
+  }
+
+  // 3. Verificar se o usuário tem subscrição ativa
+  const hasActiveSubscription = await checkSubscription();
+  if (!hasActiveSubscription) {
+    redirect("/pricing");
   }
 
   // --- LÓGICA DE DATAS DINÂMICA ---
