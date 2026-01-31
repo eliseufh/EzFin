@@ -42,7 +42,10 @@ export function GoalCard({ goal, currency }: GoalCardProps) {
   const [amountToAdd, setAmountToAdd] = useState("");
   const [isAddOpen, setIsAddOpen] = useState(false);
 
-  const percentage = Math.min(100, Math.floor((goal.currentAmount / goal.targetAmount) * 100));
+  const percentage = Math.min(
+    100,
+    Math.floor((goal.currentAmount / goal.targetAmount) * 100),
+  );
 
   const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,13 +66,18 @@ export function GoalCard({ goal, currency }: GoalCardProps) {
   return (
     <div className="space-y-3 border-b pb-4 last:border-0 last:pb-0">
       <div className="flex justify-between items-center text-sm">
-        <span className="font-semibold text-slate-700">{goal.name}</span>
+        <span className="font-semibold text-slate-700 dark:text-slate-200">
+          {goal.name}
+        </span>
         <div className="flex gap-1">
-          
           {/* POPUP PARA ADICIONAR DINHEIRO (Substitui o prompt) */}
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-7 w-7 text-green-600">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-green-600"
+              >
                 <Plus className="h-4 w-4" />
               </Button>
             </DialogTrigger>
@@ -91,7 +99,10 @@ export function GoalCard({ goal, currency }: GoalCardProps) {
                     autoFocus
                   />
                 </div>
-                <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+                <Button
+                  type="submit"
+                  className="w-full bg-green-600 hover:bg-green-700"
+                >
                   Confirmar Depósito
                 </Button>
               </form>
@@ -101,20 +112,30 @@ export function GoalCard({ goal, currency }: GoalCardProps) {
           {/* POPUP PARA EXCLUIR META (Substitui o confirm) */}
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-7 w-7 text-red-400">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-red-400"
+              >
                 <Trash2 className="h-4 w-4" />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Excluir meta &quot;{goal.name}&quot;?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  Excluir meta &quot;{goal.name}&quot;?
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Isso removerá seu objetivo e todo o progresso registrado até agora.
+                  Isso removerá seu objetivo e todo o progresso registrado até
+                  agora.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction onClick={() => deleteGoal(goal.id)} className="bg-red-600 hover:bg-red-700">
+                <AlertDialogAction
+                  onClick={() => deleteGoal(goal.id)}
+                  className="bg-red-600 hover:bg-red-700"
+                >
                   Excluir Meta
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -122,9 +143,9 @@ export function GoalCard({ goal, currency }: GoalCardProps) {
           </AlertDialog>
         </div>
       </div>
-      
+
       <Progress value={percentage} className="h-2 bg-slate-100" />
-      
+
       <div className="flex justify-between text-[11px] text-slate-500 font-medium">
         <span>{formatCurrency(goal.currentAmount, currency)}</span>
         <span>{percentage}%</span>
