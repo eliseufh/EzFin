@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { redirect } from "next/navigation";
-import { SettingsForm } from "@/components/ui/dashboard/settings-form";
+import { SettingsForm } from "../_components/settings-form";
 import { Settings } from "lucide-react";
 
 export const dynamic = "force-dynamic";

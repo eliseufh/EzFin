@@ -2,7 +2,7 @@ import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { LayoutDashboard, Settings, Wallet } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { ThemeToggle } from "./_components/theme-toggle";
 
 export default function DashboardLayout({
   children,

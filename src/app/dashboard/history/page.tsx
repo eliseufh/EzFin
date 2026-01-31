@@ -19,10 +19,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, History } from "lucide-react";
 
 // Seus Componentes Customizados
-import { HistorySearch } from "@/components/ui/dashboard/history-search";
-import { HistoryFilters } from "@/components/ui/dashboard/history-filters";
-import { EditTransactionDialog } from "@/components/ui/dashboard/edit-transaction-dialog";
-import { DeleteButton } from "@/components/ui/dashboard/delete-button";
+import { HistorySearch } from "../_components/history-search";
+import { HistoryFilters } from "../_components/history-filters";
+import { EditTransactionDialog } from "../_components/edit-transaction-dialog";
+import { DeleteButton } from "../_components/delete-button";
 
 export const dynamic = "force-dynamic";
 

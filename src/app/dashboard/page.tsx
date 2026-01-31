@@ -15,14 +15,14 @@ import { Badge } from "@/components/ui/badge";
 import { DollarSign, TrendingDown, TrendingUp } from "lucide-react";
 
 // Importações dos seus componentes
-import { AddTransactionDialog } from "@/components/ui/dashboard/add-transaction-dialog";
-import { AddSubscriptionDialog } from "@/components/ui/dashboard/add-subscription-dialog";
-import { DeleteButton } from "@/components/ui/dashboard/delete-button";
-import { EditTransactionDialog } from "@/components/ui/dashboard/edit-transaction-dialog";
-import { GoalCard } from "@/components/ui/dashboard/goal-card";
-import { AddGoalDialog } from "@/components/ui/dashboard/add-goal-dialog";
-import { MonthSelector } from "@/components/ui/dashboard/month-selector";
-import { CategoryChart } from "@/components/ui/dashboard/category-chart";
+import { AddTransactionDialog } from "./_components/add-transaction-dialog";
+import { AddSubscriptionDialog } from "./_components/add-subscription-dialog";
+import { DeleteButton } from "./_components/delete-button";
+import { EditTransactionDialog } from "./_components/edit-transaction-dialog";
+import { GoalCard } from "./_components/goal-card";
+import { AddGoalDialog } from "./_components/add-goal-dialog";
+import { MonthSelector } from "./_components/month-selector";
+import { CategoryChart } from "./_components/category-chart";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
