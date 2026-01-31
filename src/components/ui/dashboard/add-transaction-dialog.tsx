@@ -14,7 +14,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { PlusCircle } from "lucide-react";
 
 export function AddTransactionDialog() {
@@ -33,7 +39,7 @@ export function AddTransactionDialog() {
           Nova Transação
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>Adicionar Movimentação</DialogTitle>
           <DialogDescription>
@@ -51,15 +57,25 @@ export function AddTransactionDialog() {
           <TabsContent value="expense">
             <form action={handleSubmit} className="space-y-4 mt-4">
               <input type="hidden" name="type" value="expense" />
-              
+
               <div className="grid gap-2">
                 <Label>Descrição</Label>
-                <Input name="description" placeholder="Ex: Mercado, Uber..." required />
+                <Input
+                  name="description"
+                  placeholder="Ex: Mercado, Uber..."
+                  required
+                />
               </div>
 
               <div className="grid gap-2">
                 <Label>Valor (€)</Label>
-                <Input name="amount" type="number" step="0.01" placeholder="0.00" required />
+                <Input
+                  name="amount"
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  required
+                />
               </div>
 
               <div className="grid gap-2">
@@ -78,7 +94,10 @@ export function AddTransactionDialog() {
                 </Select>
               </div>
 
-              <Button type="submit" className="w-full bg-red-600 hover:bg-red-700">
+              <Button
+                type="submit"
+                className="w-full bg-red-600 hover:bg-red-700"
+              >
                 Registrar Saída
               </Button>
             </form>
@@ -88,33 +107,46 @@ export function AddTransactionDialog() {
           <TabsContent value="income">
             <form action={handleSubmit} className="space-y-4 mt-4">
               <input type="hidden" name="type" value="income" />
-              
+
               <div className="grid gap-2">
                 <Label>Descrição</Label>
-                <Input name="description" placeholder="Ex: Salário, Freelance..." required />
+                <Input
+                  name="description"
+                  placeholder="Ex: Salário, Freelance..."
+                  required
+                />
               </div>
 
               <div className="grid gap-2">
                 <Label>Valor (€)</Label>
-                <Input name="amount" type="number" step="0.01" placeholder="0.00" required />
+                <Input
+                  name="amount"
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                  required
+                />
               </div>
 
               <div className="grid gap-2">
-                  <Label>Categoria</Label>
-                  <Select name="category" defaultValue="Salário">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Salário">Salário</SelectItem>
-                      <SelectItem value="Freelance">Freelance</SelectItem>
-                      <SelectItem value="Investimentos">Investimentos</SelectItem>
-                      <SelectItem value="Outros">Outros</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Label>Categoria</Label>
+                <Select name="category" defaultValue="Salário">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Salário">Salário</SelectItem>
+                    <SelectItem value="Freelance">Freelance</SelectItem>
+                    <SelectItem value="Investimentos">Investimentos</SelectItem>
+                    <SelectItem value="Outros">Outros</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-              <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+              <Button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700"
+              >
                 Registrar Entrada
               </Button>
             </form>
