@@ -97,7 +97,7 @@ export default function Home() {
             <SignedOut>
               <SignInButton mode="modal">
                 <Button size="lg" className="text-base px-8">
-                  Começar Gratuitamente
+                  Ver Planos
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </SignInButton>
@@ -235,8 +235,8 @@ export default function Home() {
               Pronto para transformar suas finanças?
             </h2>
             <p className="text-xl mb-8 text-green-50">
-              Comece gratuitamente e tenha controle total do seu dinheiro hoje
-              mesmo.
+              Planos a partir de €4.99/mês. Tenha controle total do seu dinheiro
+              hoje mesmo.
             </p>
 
             <SignedOut>
@@ -246,7 +246,7 @@ export default function Home() {
                   variant="secondary"
                   className="text-base px-8 bg-white text-green-600 hover:bg-green-50"
                 >
-                  Criar Conta Grátis
+                  Escolher Plano
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </SignInButton>
