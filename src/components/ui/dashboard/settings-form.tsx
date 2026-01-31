@@ -18,7 +18,7 @@ export function SettingsForm({ initialCurrency }: SettingsFormProps) {
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
-    
+
     // Passamos o formData diretamente
     const result = await updateSettings(formData);
 
@@ -35,19 +35,21 @@ export function SettingsForm({ initialCurrency }: SettingsFormProps) {
 
       // 3. A mágica do Next.js
       // Isso atualiza os dados do servidor (Dashboard) sem recarregar a página
-      router.refresh(); 
+      router.refresh();
     }
   }
 
   return (
     <form action={handleSubmit} className="space-y-6">
       <div className="grid gap-2">
-        <Label htmlFor="currency">Moeda Principal</Label>
-        <select 
-          name="currency" 
-          id="currency" 
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-          value={currency} 
+        <Label htmlFor="currency" className="dark:text-slate-200">
+          Moeda Principal
+        </Label>
+        <select
+          name="currency"
+          id="currency"
+          className="flex h-10 w-full rounded-md border border-input dark:border-slate-700 bg-background dark:bg-slate-900 dark:text-slate-100 px-3 py-2 text-sm"
+          value={currency}
           onChange={(e) => setCurrency(e.target.value)}
         >
           <option value="EUR">Euro (€)</option>
