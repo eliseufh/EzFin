@@ -23,39 +23,39 @@ export default async function Home() {
   }
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+    <main className="relative min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Círculo grande superior direito */}
         <div
-          className="absolute -top-40 -right-40 size-[500px] bg-green-500/20 rounded-full blur-[100px] animate-pulse"
+          className="absolute -top-40 -right-40 size-125 bg-green-500/20 rounded-full blur-[100px] animate-pulse"
           style={{ animationDuration: "8s" }}
         />
 
         {/* Círculo médio inferior esquerdo */}
         <div
-          className="absolute -bottom-32 -left-32 size-[600px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse"
+          className="absolute -bottom-32 -left-32 size-150 bg-blue-500/20 rounded-full blur-[120px] animate-pulse"
           style={{ animationDuration: "10s", animationDelay: "2s" }}
         />
 
         {/* Círculo pequeno centro-direita */}
         <div
-          className="absolute top-1/3 right-1/4 size-[400px] bg-purple-500/15 rounded-full blur-[90px] animate-pulse"
+          className="absolute top-1/3 right-1/4 size-100 bg-purple-500/15 rounded-full blur-[90px] animate-pulse"
           style={{ animationDuration: "12s", animationDelay: "4s" }}
         />
 
         {/* Grid pattern sutil */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-size-[4rem_4rem]" />
       </div>
 
       {/* Header */}
       <header className="fixed top-0 w-full bg-slate-900/80 backdrop-blur-md border-b border-slate-800 z-50">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-gradient-to-br from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="h-8 w-8 bg-linear-to-br from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-linear-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
               EzFin
             </span>
           </div>
@@ -89,7 +89,7 @@ export default async function Home() {
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
             Controle suas finanças
             <br />
-            <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
               de forma inteligente
             </span>
           </h1>
@@ -236,7 +236,7 @@ export default async function Home() {
       {/* CTA Section */}
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-12 text-white shadow-2xl shadow-green-500/20">
+          <div className="bg-linear-to-r from-green-600 to-blue-600 rounded-2xl p-12 text-white shadow-2xl shadow-green-500/20">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Pronto para transformar suas finanças?
             </h2>
@@ -278,7 +278,7 @@ export default async function Home() {
       <footer className="bg-slate-950 border-t border-slate-800 text-white py-8 px-4 relative z-10">
         <div className="max-w-6xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="h-6 w-6 bg-gradient-to-br from-green-600 to-blue-600 rounded flex items-center justify-center">
+            <div className="h-6 w-6 bg-linear-to-br from-green-600 to-blue-600 rounded flex items-center justify-center">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <span className="text-lg font-semibold">EzFin</span>
