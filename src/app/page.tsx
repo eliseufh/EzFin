@@ -12,15 +12,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { getEzFinUser } from "@/lib/auth-helper";
-import { redirect } from "next/navigation";
 
-export default async function Home() {
-  // Se o usuário estiver logado, redireciona para o dashboard
-  const user = await getEzFinUser();
-  if (user) {
-    redirect("/dashboard");
-  }
+export default function Home() {
+  // Página inicial pública - não redireciona automaticamente
 
   return (
     <main className="relative min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
