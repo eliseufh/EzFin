@@ -115,23 +115,23 @@ export default function PricingPage() {
 
             <ul className="space-y-4 mb-8">
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
                 <span className="text-slate-300">Transações ilimitadas</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
                 <span className="text-slate-300">Controle de assinaturas</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
                 <span className="text-slate-300">Metas de economia</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
                 <span className="text-slate-300">Gráficos e relatórios</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
                 <span className="text-slate-300">Suporte prioritário</span>
               </li>
             </ul>
@@ -164,27 +164,27 @@ export default function PricingPage() {
 
             <ul className="space-y-4 mb-8">
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200">Transações ilimitadas</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200">Controle de assinaturas</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200">Metas de economia</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200">Gráficos e relatórios</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200">Suporte prioritário</span>
               </li>
               <li className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200 font-semibold">
                   2 meses grátis
                 </span>
