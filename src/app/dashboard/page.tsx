@@ -40,13 +40,17 @@ export default async function DashboardPage(props: DashboardProps) {
   // 2. Garantir que o usuário existe
   const user = await getEzFinUser();
   if (!user) {
-    redirect("/"); 
+    redirect("/");
   }
 
   // --- LÓGICA DE DATAS DINÂMICA ---
   const now = new Date();
-  const currentMonth = searchParams.month ? parseInt(searchParams.month) : now.getMonth() + 1;
-  const currentYear = searchParams.year ? parseInt(searchParams.year) : now.getFullYear();
+  const currentMonth = searchParams.month
+    ? parseInt(searchParams.month)
+    : now.getMonth() + 1;
+  const currentYear = searchParams.year
+    ? parseInt(searchParams.year)
+    : now.getFullYear();
 
   // Intervalo do mês selecionado
   const startDate = new Date(currentYear, currentMonth - 1, 1);
@@ -54,12 +58,12 @@ export default async function DashboardPage(props: DashboardProps) {
 
   // 3. Buscar transações do mês selecionado (limite 5 para o dashboard)
   const transactions = await db.transaction.findMany({
-    where: { 
+    where: {
       userId: user.id,
-      date: { gte: startDate, lte: endDate } 
+      date: { gte: startDate, lte: endDate },
     },
     orderBy: { date: "desc" },
-    take: 5, 
+    take: 5,
   });
 
   // 4. CALCULAR SALDO TOTAL (GLOBAL - Acumulado de sempre)
@@ -67,29 +71,30 @@ export default async function DashboardPage(props: DashboardProps) {
     where: { userId: user.id, type: "income" },
     _sum: { amount: true },
   });
-  
+
   const globalExpense = await db.transaction.aggregate({
     where: { userId: user.id, type: "expense" },
     _sum: { amount: true },
   });
 
-  const totalBalance = (globalIncome._sum.amount || 0) - (globalExpense._sum.amount || 0);
+  const totalBalance =
+    (globalIncome._sum.amount || 0) - (globalExpense._sum.amount || 0);
 
   // 5. CALCULAR TOTAIS DO MÊS SELECIONADO
   const monthlyIncomeAgg = await db.transaction.aggregate({
-    where: { 
-      userId: user.id, 
+    where: {
+      userId: user.id,
       type: "income",
-      date: { gte: startDate, lte: endDate } 
+      date: { gte: startDate, lte: endDate },
     },
     _sum: { amount: true },
   });
 
   const monthlyExpenseAgg = await db.transaction.aggregate({
-    where: { 
-      userId: user.id, 
+    where: {
+      userId: user.id,
       type: "expense",
-      date: { gte: startDate, lte: endDate }
+      date: { gte: startDate, lte: endDate },
     },
     _sum: { amount: true },
   });
@@ -116,28 +121,27 @@ export default async function DashboardPage(props: DashboardProps) {
   // 7. Buscar Assinaturas e Metas
   const subscriptions = await db.subscription.findMany({
     where: { userId: user.id },
-    orderBy: { billingDay: 'asc' }
+    orderBy: { billingDay: "asc" },
   });
 
   const goals = await db.goal.findMany({
     where: { userId: user.id },
-    orderBy: { createdAt: "desc" }
+    orderBy: { createdAt: "desc" },
   });
 
   return (
     <div className="flex flex-col gap-6 p-4 md:p-8 max-w-7xl mx-auto pb-20">
-      
       {/* --- CABEÇALHO --- */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
             Visão Geral
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Resumo financeiro de {user.name}.
           </p>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
           <MonthSelector />
           <div className="w-full sm:w-auto">
@@ -148,37 +152,45 @@ export default async function DashboardPage(props: DashboardProps) {
 
       {/* --- CARDS DE RESUMO --- */}
       <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-        <Card className="shadow-sm border-none bg-white">
+        <Card className="dark:bg-slate-800 dark:border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Saldo Total</CardTitle>
-            <DollarSign className="h-4 w-4 text-slate-500" />
+            <CardTitle className="text-sm font-medium dark:text-slate-100">
+              Saldo Total
+            </CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold ${totalBalance >= 0 ? "text-green-600" : "text-red-600"}`}>
+            <div
+              className={`text-2xl font-bold ${totalBalance >= 0 ? "text-green-600" : "text-red-600"}`}
+            >
               {formatCurrency(totalBalance, user.currency)}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-none bg-white border-l-4 border-l-green-500">
+        <Card className="dark:bg-slate-800 dark:border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Entradas (Mês)</CardTitle>
+            <CardTitle className="text-sm font-medium dark:text-slate-100">
+              Entradas (Mês)
+            </CardTitle>
             <TrendingUp className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-slate-900">
+            <div className="text-2xl font-bold dark:text-slate-50">
               {formatCurrency(currentMonthIncome, user.currency)}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-none bg-white border-l-4 border-l-red-500">
+        <Card className="dark:bg-slate-800 dark:border-slate-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Saídas (Mês)</CardTitle>
+            <CardTitle className="text-sm font-medium dark:text-slate-100">
+              Saídas (Mês)
+            </CardTitle>
             <TrendingDown className="h-4 w-4 text-red-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-slate-900">
+            <div className="text-2xl font-bold dark:text-slate-50">
               {formatCurrency(currentMonthExpense, user.currency)}
             </div>
           </CardContent>
@@ -186,24 +198,30 @@ export default async function DashboardPage(props: DashboardProps) {
       </div>
 
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
-        
         {/* --- COLUNA ESQUERDA --- */}
         <div className="lg:col-span-2 space-y-6">
-          
-          <Card className="shadow-sm border-none">
+          <Card className="dark:bg-slate-800 dark:border-slate-700">
             <CardHeader>
-              <CardTitle className="text-base font-semibold">Despesas por Categoria</CardTitle>
+              <CardTitle className="text-base font-semibold dark:text-slate-100">
+                Despesas por Categoria
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <CategoryChart data={chartData} />
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm border-none">
+          <Card className="dark:bg-slate-800 dark:border-slate-700">
             <CardHeader>
-              <CardTitle className="text-base font-semibold">Últimas Movimentações</CardTitle>
+              <CardTitle className="text-base font-semibold dark:text-slate-100">
+                Últimas Movimentações
+              </CardTitle>
               <Link href="/dashboard/history">
-                <Button variant="link" size="sm" className="text-blue-600 hover:text-blue-700 font-medium h-auto p-0">
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-500 font-medium h-auto p-0"
+                >
                   Ver tudo
                 </Button>
               </Link>
@@ -223,7 +241,10 @@ export default async function DashboardPage(props: DashboardProps) {
                   <TableBody>
                     {transactions.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={5} className="text-center py-10 text-slate-500 italic">
+                        <TableCell
+                          colSpan={5}
+                          className="text-center py-10 text-muted-foreground italic"
+                        >
                           Sem dados para este período.
                         </TableCell>
                       </TableRow>
@@ -234,13 +255,18 @@ export default async function DashboardPage(props: DashboardProps) {
                             {t.description}
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline" className="font-normal">{t.category}</Badge>
+                            <Badge variant="outline" className="font-normal">
+                              {t.category}
+                            </Badge>
                           </TableCell>
-                          <TableCell className="text-slate-600">
+                          <TableCell className="text-slate-600 dark:text-slate-300">
                             {new Date(t.date).toLocaleDateString("pt-PT")}
                           </TableCell>
-                          <TableCell className={`text-right font-bold ${t.type === "expense" ? "text-red-600" : "text-green-600"}`}>
-                            {t.type === "expense" ? "-" : "+"} {formatCurrency(t.amount, user.currency)}
+                          <TableCell
+                            className={`text-right font-bold ${t.type === "expense" ? "text-red-600" : "text-green-600"}`}
+                          >
+                            {t.type === "expense" ? "-" : "+"}{" "}
+                            {formatCurrency(t.amount, user.currency)}
                           </TableCell>
                           <TableCell className="text-right">
                             <div className="flex items-center justify-end gap-2">
@@ -260,29 +286,42 @@ export default async function DashboardPage(props: DashboardProps) {
 
         {/* --- COLUNA DIREITA --- */}
         <div className="space-y-6">
-          <Card className="shadow-sm border-none">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b mb-4">
-              <CardTitle className="text-base font-semibold">Contas Fixas</CardTitle>
+          <Card className="dark:bg-slate-800 dark:border-slate-700">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b dark:border-slate-700 mb-4">
+              <CardTitle className="text-base font-semibold dark:text-slate-100">
+                Contas Fixas
+              </CardTitle>
               <AddSubscriptionDialog />
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {subscriptions.length === 0 ? (
-                  <p className="text-xs text-center text-slate-400 py-4">Sem contas fixas.</p>
+                  <p className="text-xs text-center text-muted-foreground py-4">
+                    Sem contas fixas.
+                  </p>
                 ) : (
                   subscriptions.map((sub) => (
-                    <div key={sub.id} className="flex items-center justify-between pb-2 border-b last:border-0 last:pb-0">
+                    <div
+                      key={sub.id}
+                      className="flex items-center justify-between pb-2 border-b last:border-0 last:pb-0"
+                    >
                       <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xs border border-blue-100">
+                        <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xs border border-blue-200 dark:border-blue-500/30">
                           {sub.name.substring(0, 1).toUpperCase()}
                         </div>
                         <div className="flex flex-col">
-                          <span className="font-medium text-sm">{sub.name}</span>
-                          <span className="text-[10px] text-slate-500">Dia {sub.billingDay}</span>
+                          <span className="font-medium text-sm dark:text-slate-100">
+                            {sub.name}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground">
+                            Dia {sub.billingDay}
+                          </span>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm">{formatCurrency(sub.amount, user.currency)}</span>
+                        <span className="font-bold text-sm dark:text-slate-100">
+                          {formatCurrency(sub.amount, user.currency)}
+                        </span>
                         <DeleteButton id={sub.id} type="subscription" />
                       </div>
                     </div>
@@ -292,16 +331,22 @@ export default async function DashboardPage(props: DashboardProps) {
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm border-none border-t-2 border-t-green-500">
+          <Card className="dark:bg-slate-800 dark:border-slate-700">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-base font-semibold">Meus Objetivos</CardTitle>
+              <CardTitle className="text-base font-semibold dark:text-slate-100">
+                Meus Objetivos
+              </CardTitle>
               <AddGoalDialog />
             </CardHeader>
             <CardContent className="space-y-6 pt-2">
               {goals.length === 0 ? (
-                <p className="text-xs text-center text-slate-400 py-4">Defina uma meta!</p>
+                <p className="text-xs text-center text-muted-foreground py-4">
+                  Defina uma meta!
+                </p>
               ) : (
-                goals.map(g => <GoalCard key={g.id} goal={g} currency={user.currency} />)
+                goals.map((g) => (
+                  <GoalCard key={g.id} goal={g} currency={user.currency} />
+                ))
               )}
             </CardContent>
           </Card>
