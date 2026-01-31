@@ -210,10 +210,10 @@ export default async function DashboardPage(props: DashboardProps) {
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto w-full">
-                <Table className="min-w-[700px] w-full">
+                <Table className="min-w-175 w-full">
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[150px]">Descrição</TableHead>
+                      <TableHead className="w-37.5">Descrição</TableHead>
                       <TableHead>Categoria</TableHead>
                       <TableHead>Data</TableHead>
                       <TableHead className="text-right">Valor</TableHead>
@@ -230,7 +230,7 @@ export default async function DashboardPage(props: DashboardProps) {
                     ) : (
                       transactions.map((t) => (
                         <TableRow key={t.id}>
-                          <TableCell className="font-medium truncate max-w-[150px]">
+                          <TableCell className="font-medium truncate max-w-37.5">
                             {t.description}
                           </TableCell>
                           <TableCell>
