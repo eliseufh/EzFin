@@ -20,7 +20,14 @@ model User {
   email         String    @unique
   name          String?
   clerkId       String?   @unique // Caso use Clerk ou NextAuth no futuro
-  plan          String    @default("free") // free, monthly, annual
+  
+  // Campos de subscrição/pagamento (Stripe)
+  plan                  String    @default("free") // free, monthly, annual
+  stripeCustomerId      String?   @unique // ID do cliente no Stripe
+  stripeSubscriptionId  String?   @unique // ID da subscrição no Stripe
+  subscriptionStatus    String    @default("inactive") // inactive, active, canceled, past_due
+  subscriptionEndsAt    DateTime? // Data de fim da subscrição (para trial ou cancelamento)
+  
   currency      String    @default("EUR")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
