@@ -92,7 +92,9 @@ export async function POST(req: NextRequest) {
 
       case "invoice.payment_failed": {
         const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId = invoice.subscription as string;
+        
+        // A propriedade subscription pode existir em alguns casos
+        const subscriptionId = (invoice as any).subscription as string | undefined;
 
         if (subscriptionId) {
           await db.user.update({
