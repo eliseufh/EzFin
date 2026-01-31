@@ -12,6 +12,15 @@ export async function checkSubscription(): Promise<boolean> {
     return false;
   }
 
+  // Lista de emails de admin (owners) que têm acesso total
+  const adminEmails = process.env.ADMIN_EMAILS?.split(',') || [];
+  const userEmail = user.emailAddresses[0]?.emailAddress;
+  
+  // Se for admin, permite acesso sem verificar subscrição
+  if (userEmail && adminEmails.includes(userEmail)) {
+    return true;
+  }
+
   const dbUser = await db.user.findUnique({
     where: { clerkId: user.id },
     select: {
