@@ -81,7 +81,7 @@ export function GoalCard({ goal, currency }: GoalCardProps) {
                 <Plus className="h-4 w-4" />
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[350px]">
+            <DialogContent className="sm:max-w-87.5">
               <DialogHeader>
                 <DialogTitle>Adicionar à meta: {goal.name}</DialogTitle>
               </DialogHeader>

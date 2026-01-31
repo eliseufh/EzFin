@@ -43,7 +43,7 @@ export function MonthSelector() {
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
-        <div className="flex items-center gap-2 px-3 min-w-[140px] justify-center border-x dark:border-slate-700">
+        <div className="flex items-center gap-2 px-3 min-w-35 justify-center border-x dark:border-slate-700">
           <CalendarIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
           <span className="text-sm font-medium capitalize dark:text-slate-200">
             {format(date, "MMMM yyyy", { locale: pt })}
