@@ -55,7 +55,8 @@ export async function getSubscriptionData() {
     return null;
   }
 
-  const dbUser = await db.user.findUnique({
+  // Busca o usuário no banco de dados pelo clerkId
+  let dbUser = await db.user.findUnique({
     where: { clerkId: user.id },
     select: {
       plan: true,
@@ -65,6 +66,32 @@ export async function getSubscriptionData() {
       stripeSubscriptionId: true,
     },
   });
+
+  // Se o usuário não existe no banco, cria com valores padrão
+  if (!dbUser) {
+    const fullName = [user.firstName, user.lastName]
+      .filter(Boolean)
+      .join(" ") || "Usuário";
+
+    const newUser = await db.user.create({
+      data: {
+        clerkId: user.id,
+        email: user.emailAddresses[0].emailAddress,
+        name: fullName,
+        plan: "free",
+        subscriptionStatus: "inactive",
+      },
+      select: {
+        plan: true,
+        subscriptionStatus: true,
+        subscriptionEndsAt: true,
+        stripeCustomerId: true,
+        stripeSubscriptionId: true,
+      },
+    });
+
+    return newUser;
+  }
 
   return dbUser;
 }
