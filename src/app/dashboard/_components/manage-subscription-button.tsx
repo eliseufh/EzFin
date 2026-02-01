@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useTranslations } from "@/i18n/use-translations";
 
 export function ManageSubscriptionButton() {
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslations();
 
   const handleManageSubscription = async () => {
     setLoading(true);
@@ -36,7 +38,9 @@ export function ManageSubscriptionButton() {
       variant="outline"
       className="dark:bg-slate-700 dark:border-slate-600 dark:text-slate-100"
     >
-      {loading ? "Carregando..." : "Gerenciar Subscrição"}
+      {loading
+        ? t("dashboard.manageSubscription.loading")
+        : t("dashboard.manageSubscription.button")}
     </Button>
   );
 }
