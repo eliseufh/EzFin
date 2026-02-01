@@ -5,11 +5,14 @@ import { Check, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useTranslations } from "@/i18n/use-translations";
 
 export default function PricingPage() {
   const [loading, setLoading] = useState<string | null>(null);
   const [checkingSubscription, setCheckingSubscription] = useState(true);
   const router = useRouter();
+  const { t } = useTranslations();
 
   // Verifica se usuário já tem subscrição ativa
   useEffect(() => {
@@ -80,14 +83,16 @@ export default function PricingPage() {
             </span>
           </div>
 
-          {/* Botão do usuário logado */}
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: "w-10 h-10",
-              },
-            }}
-          />
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "w-10 h-10",
+                },
+              }}
+            />
+          </div>
         </div>
       </header>
 
@@ -95,98 +100,122 @@ export default function PricingPage() {
       <div className="container mx-auto px-6 py-20">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-white mb-4">
-            Escolha o plano ideal para você
+            {t("pricing.title")}
           </h1>
-          <p className="text-xl text-slate-400">
-            Comece a organizar suas finanças hoje mesmo
-          </p>
+          <p className="text-xl text-slate-400">{t("pricing.subtitle")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Plano Mensal */}
           <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl p-8 hover:border-green-500/50 transition-all">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Mensal</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                {t("pricing.monthly")}
+              </h3>
               <div className="flex items-baseline gap-2">
                 <span className="text-5xl font-bold text-white">€4,99</span>
-                <span className="text-slate-400">/mês</span>
+                <span className="text-slate-400">{t("pricing.month")}</span>
               </div>
             </div>
 
             <ul className="space-y-4 mb-8">
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
-                <span className="text-slate-300">Transações ilimitadas</span>
+                <span className="text-slate-300">
+                  {t("pricing.features.transactions")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
-                <span className="text-slate-300">Controle de assinaturas</span>
+                <span className="text-slate-300">
+                  {t("pricing.features.subscriptions")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
-                <span className="text-slate-300">Metas de economia</span>
+                <span className="text-slate-300">
+                  {t("pricing.features.goals")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
-                <span className="text-slate-300">Gráficos e relatórios</span>
+                <span className="text-slate-300">
+                  {t("pricing.features.reports")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
-                <span className="text-slate-300">Suporte prioritário</span>
+                <span className="text-slate-300">
+                  {t("pricing.features.support")}
+                </span>
               </li>
             </ul>
 
             <Button
               onClick={() => handleSubscribe("monthly")}
               disabled={loading === "monthly"}
-              className="w-full bg-linear-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+              className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
             >
-              {loading === "monthly" ? "Processando..." : "Assinar Mensal"}
+              {loading === "monthly"
+                ? t("dashboard.loading")
+                : t("pricing.selectPlan")}
             </Button>
           </div>
 
           {/* Plano Anual */}
-          <div className="bg-linear-to-br from-green-900/30 to-blue-900/30 backdrop-blur border-2 border-green-500 rounded-2xl p-8 relative">
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-green-600 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-              MELHOR OFERTA
+          <div className="bg-gradient-to-br from-green-900/30 to-blue-900/30 backdrop-blur border-2 border-green-500 rounded-2xl p-8 relative">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-600 to-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+              {t("pricing.bestOffer")}
             </div>
 
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Anual</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                {t("pricing.annual")}
+              </h3>
               <div className="flex items-baseline gap-2">
                 <span className="text-5xl font-bold text-white">€49,99</span>
-                <span className="text-slate-400">/ano</span>
+                <span className="text-slate-400">{t("pricing.year")}</span>
               </div>
               <p className="text-green-400 text-sm mt-2 font-semibold">
-                Economize 17% (€9,89/ano)
+                {t("pricing.save")} (€9,89{t("pricing.year")})
               </p>
             </div>
 
             <ul className="space-y-4 mb-8">
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-                <span className="text-slate-200">Transações ilimitadas</span>
+                <span className="text-slate-200">
+                  {t("pricing.features.transactions")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-                <span className="text-slate-200">Controle de assinaturas</span>
+                <span className="text-slate-200">
+                  {t("pricing.features.subscriptions")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-                <span className="text-slate-200">Metas de economia</span>
+                <span className="text-slate-200">
+                  {t("pricing.features.goals")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-                <span className="text-slate-200">Gráficos e relatórios</span>
+                <span className="text-slate-200">
+                  {t("pricing.features.reports")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-                <span className="text-slate-200">Suporte prioritário</span>
+                <span className="text-slate-200">
+                  {t("pricing.features.support")}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
                 <span className="text-slate-200 font-semibold">
-                  2 meses grátis
+                  {t("pricing.save")}
                 </span>
               </li>
             </ul>
@@ -194,9 +223,11 @@ export default function PricingPage() {
             <Button
               onClick={() => handleSubscribe("annual")}
               disabled={loading === "annual"}
-              className="w-full bg-linear-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
+              className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
             >
-              {loading === "annual" ? "Processando..." : "Assinar Anual"}
+              {loading === "annual"
+                ? t("dashboard.loading")
+                : t("pricing.selectPlan")}
             </Button>
           </div>
         </div>
@@ -204,11 +235,11 @@ export default function PricingPage() {
         {/* FAQ ou Info adicional */}
         <div className="mt-16 text-center">
           <p className="text-slate-400">
-            Pagamento seguro processado por{" "}
+            {t("pricing.securePayment")}{" "}
             <span className="text-white font-semibold">Stripe</span>
           </p>
           <p className="text-slate-500 text-sm mt-2">
-            Cancele a qualquer momento. Sem taxas ocultas.
+            {t("pricing.cancelAnytime")}
           </p>
         </div>
       </div>
