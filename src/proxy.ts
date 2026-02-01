@@ -13,19 +13,45 @@ export default clerkMiddleware(async (auth, request) => {
   const { userId } = await auth();
   const { pathname } = request.nextUrl;
 
+  // Detecção automática de idioma (apenas se não houver cookie de idioma)
+  const savedLanguage = request.cookies.get("language")?.value;
+  
+  let response: NextResponse;
+
   // Se não está logado e tenta acessar rota protegida
   if (!userId && !isPublicRoute(request)) {
     const signInUrl = new URL("/sign-in", request.url);
     signInUrl.searchParams.set("redirect_url", pathname);
-    return NextResponse.redirect(signInUrl);
+    response = NextResponse.redirect(signInUrl);
   }
-
   // Se está logado e acessa a home, redireciona para pricing
-  if (userId && pathname === "/") {
-    return NextResponse.redirect(new URL("/pricing", request.url));
+  else if (userId && pathname === "/") {
+    response = NextResponse.redirect(new URL("/pricing", request.url));
+  }
+  else {
+    response = NextResponse.next();
   }
 
-  return NextResponse.next();
+  // Detecta o idioma do navegador se não houver cookie
+  if (!savedLanguage) {
+    const acceptLanguage = request.headers.get("accept-language");
+    let detectedLocale = "pt"; // Idioma padrão
+
+    if (acceptLanguage) {
+      const primaryLanguage = acceptLanguage.split(",")[0].split("-")[0].toLowerCase();
+      if (primaryLanguage === "en") {
+        detectedLocale = "en";
+      }
+    }
+
+    // Define o cookie com o idioma detectado
+    response.cookies.set("language", detectedLocale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365, // 1 ano
+    });
+  }
+
+  return response;
 });
 
 export const config = {
