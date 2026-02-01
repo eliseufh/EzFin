@@ -15,13 +15,13 @@ export default async function DashboardPage(props: DashboardProps) {
   // 1. "Desembrulhar" os searchParams (Necessário no Next.js 15+)
   const searchParams = await props.searchParams;
 
-  // 2. Garantir que o usuário existe
+  // 2. Garantir que o usuário existe e verificar subscrição (OTIMIZADO)
   const user = await getEzFinUser();
   if (!user) {
     redirect("/");
   }
 
-  // 3. Verificar se o usuário tem subscrição ativa
+  // 3. Verificar subscrição (usa cache se já foi buscado recentemente)
   const hasActiveSubscription = await checkSubscription();
   if (!hasActiveSubscription) {
     redirect("/pricing");
