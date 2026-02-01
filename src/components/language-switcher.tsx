@@ -22,14 +22,26 @@ export function LanguageSwitcher() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("language") || "pt";
+    // Verifica cookie primeiro, depois localStorage
+    const cookieLang = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("language="))
+      ?.split("=")[1];
+
+    const savedLang = cookieLang || localStorage.getItem("language") || "pt";
     setCurrentLang(savedLang);
     setMounted(true);
   }, []);
 
   const handleLanguageChange = (langCode: string) => {
+    // Atualiza localStorage
     localStorage.setItem("language", langCode);
-    window.dispatchEvent(new Event("languageChange"));
+
+    // Atualiza cookie
+    const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
+    document.cookie = `language=${langCode}; expires=${expires}; path=/`;
+
+    // Recarrega a página para aplicar a mudança
     window.location.reload();
   };
 
