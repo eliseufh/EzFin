@@ -67,21 +67,13 @@ export async function getSubscriptionData() {
     },
   });
 
-  // Se o usuário não existe no banco, cria com valores padrão
+  // Se o usuário não existe, tenta buscar por email
   if (!dbUser) {
-    const fullName = [user.firstName, user.lastName]
-      .filter(Boolean)
-      .join(" ") || "Usuário";
-
-    const newUser = await db.user.create({
-      data: {
-        clerkId: user.id,
-        email: user.emailAddresses[0].emailAddress,
-        name: fullName,
-        plan: "free",
-        subscriptionStatus: "inactive",
-      },
+    const userByEmail = await db.user.findUnique({
+      where: { email: user.emailAddresses[0].emailAddress },
       select: {
+        id: true,
+        clerkId: true,
         plan: true,
         subscriptionStatus: true,
         subscriptionEndsAt: true,
@@ -90,7 +82,68 @@ export async function getSubscriptionData() {
       },
     });
 
-    return newUser;
+    // Se existe usuário com o email mas sem clerkId, atualiza o clerkId
+    if (userByEmail && !userByEmail.clerkId) {
+      const updatedUser = await db.user.update({
+        where: { id: userByEmail.id },
+        data: { clerkId: user.id },
+        select: {
+          plan: true,
+          subscriptionStatus: true,
+          subscriptionEndsAt: true,
+          stripeCustomerId: true,
+          stripeSubscriptionId: true,
+        },
+      });
+      return updatedUser;
+    }
+
+    // Se existe com clerkId mas não encontramos antes (raro), retorna
+    if (userByEmail) {
+      return {
+        plan: userByEmail.plan,
+        subscriptionStatus: userByEmail.subscriptionStatus,
+        subscriptionEndsAt: userByEmail.subscriptionEndsAt,
+        stripeCustomerId: userByEmail.stripeCustomerId,
+        stripeSubscriptionId: userByEmail.stripeSubscriptionId,
+      };
+    }
+
+    // Se realmente não existe, cria novo usuário
+    try {
+      const fullName = [user.firstName, user.lastName]
+        .filter(Boolean)
+        .join(" ") || "Usuário";
+
+      const newUser = await db.user.create({
+        data: {
+          clerkId: user.id,
+          email: user.emailAddresses[0].emailAddress,
+          name: fullName,
+          plan: "free",
+          subscriptionStatus: "inactive",
+        },
+        select: {
+          plan: true,
+          subscriptionStatus: true,
+          subscriptionEndsAt: true,
+          stripeCustomerId: true,
+          stripeSubscriptionId: true,
+        },
+      });
+
+      return newUser;
+    } catch (error) {
+      console.error("Error creating user in getSubscriptionData:", error);
+      // Retorna dados padrão se falhar
+      return {
+        plan: "free",
+        subscriptionStatus: "inactive",
+        subscriptionEndsAt: null,
+        stripeCustomerId: null,
+        stripeSubscriptionId: null,
+      };
+    }
   }
 
   return dbUser;
