@@ -8,11 +8,13 @@ import {
   Calendar as CalendarIcon,
 } from "lucide-react";
 import { format } from "date-fns";
-import { pt } from "date-fns/locale";
+import { pt, enUS } from "date-fns/locale";
+import { useTranslations } from "@/i18n/use-translations";
 
 export function MonthSelector() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { locale } = useTranslations();
 
   const month = parseInt(
     searchParams.get("month") || (new Date().getMonth() + 1).toString(),
@@ -22,6 +24,7 @@ export function MonthSelector() {
   );
 
   const date = new Date(year, month - 1);
+  const dateLocale = locale === "en" ? enUS : pt;
 
   const handleNavigate = (direction: number) => {
     const newDate = new Date(year, month - 1 + direction);
@@ -46,7 +49,7 @@ export function MonthSelector() {
         <div className="flex items-center gap-2 px-3 min-w-35 justify-center border-x dark:border-slate-700">
           <CalendarIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
           <span className="text-sm font-medium capitalize dark:text-slate-200">
-            {format(date, "MMMM yyyy", { locale: pt })}
+            {format(date, "MMMM yyyy", { locale: dateLocale })}
           </span>
         </div>
 
