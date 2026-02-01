@@ -1,0 +1,214 @@
+{
+  "home": {
+    "badge": "Gestão financeira simplificada",
+    "title": "Controle suas finanças",
+    "titleHighlight": "de forma inteligente",
+    "description": "EzFin é a plataforma completa para gerenciar suas despesas, receitas, assinaturas e metas financeiras em um só lugar.",
+    "viewPlans": "Ver Planos",
+    "signIn": "Entrar",
+    "goToDashboard": "Ir para o Dashboard",
+    "features": {
+      "title": "Tudo que você precisa em um só lugar",
+      "subtitle": "Recursos poderosos para simplificar sua vida financeira",
+      "transactions": {
+        "title": "Transações Inteligentes",
+        "description": "Registre receitas e despesas com categorização automática e visualize seus gastos em tempo real."
+      },
+      "subscriptions": {
+        "title": "Gestão de Assinaturas",
+        "description": "Acompanhe todas as suas assinaturas e gastos recorrentes com lembretes de vencimento."
+      },
+      "goals": {
+        "title": "Metas Financeiras",
+        "description": "Defina objetivos de poupança e acompanhe seu progresso rumo às suas metas financeiras."
+      },
+      "analytics": {
+        "title": "Análises Visuais",
+        "description": "Gráficos e relatórios detalhados para entender para onde seu dinheiro está indo."
+      },
+      "fast": {
+        "title": "Rápido e Intuitivo",
+        "description": "Interface moderna e responsiva que funciona perfeitamente em todos os dispositivos."
+      },
+      "secure": {
+        "title": "Seguro e Privado",
+        "description": "Seus dados financeiros são protegidos com autenticação segura e criptografia moderna."
+      }
+    },
+    "cta": {
+      "title": "Pronto para transformar suas finanças?",
+      "subtitle": "Planos a partir de €4.99/mês. Tenha controle total do seu dinheiro hoje mesmo.",
+      "choosePlan": "Escolher Plano",
+      "accessDashboard": "Acessar Dashboard"
+    },
+    "footer": {
+      "copyright": "© 2026 EzFin. Gestão financeira simplificada para todos."
+    }
+  },
+  "pricing": {
+    "title": "Escolha o Plano Perfeito",
+    "subtitle": "Comece a gerenciar suas finanças de forma inteligente",
+    "monthly": "Mensal",
+    "annual": "Anual",
+    "save": "Economize 17%",
+    "month": "/mês",
+    "year": "/ano",
+    "selectPlan": "Escolher Plano",
+    "currentPlan": "Plano Atual",
+    "bestOffer": "MELHOR OFERTA",
+    "securePayment": "Pagamento seguro processado por",
+    "cancelAnytime": "Cancele a qualquer momento. Sem taxas ocultas.",
+    "features": {
+      "transactions": "Transações ilimitadas",
+      "subscriptions": "Gestão de assinaturas",
+      "goals": "Metas financeiras",
+      "reports": "Relatórios detalhados",
+      "categories": "Categorização automática",
+      "support": "Suporte prioritário"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "overview": "Visão Geral",
+    "history": "Histórico",
+    "settings": "Configurações",
+    "balance": "Saldo",
+    "income": "Receitas",
+    "expenses": "Despesas",
+    "thisMonth": "Este Mês",
+    "subscriptions": "Assinaturas",
+    "goals": "Metas",
+    "recentTransactions": "Transações Recentes",
+    "addTransaction": "Adicionar Transação",
+    "addSubscription": "Adicionar Assinatura",
+    "addGoal": "Adicionar Meta",
+    "categories": "Categorias",
+    "noData": "Sem dados para exibir",
+    "loading": "Carregando...",
+    "actions": {
+      "edit": "Editar",
+      "delete": "Deletar",
+      "save": "Salvar",
+      "cancel": "Cancelar"
+    },
+    "form": {
+      "description": "Descrição",
+      "amount": "Valor",
+      "category": "Categoria",
+      "type": "Tipo",
+      "date": "Data",
+      "name": "Nome"
+    },
+    "types": {
+      "income": "Receita",
+      "expense": "Despesa"
+    },
+    "addTransactionDialog": {
+      "title": "Adicionar Movimentação",
+      "description": "Registre manualmente um gasto ou uma entrada extra.",
+      "newTransaction": "Nova Transação",
+      "expense": "Despesa",
+      "income": "Receita",
+      "descriptionPlaceholder": "Ex: Mercado, Uber...",
+      "incomePlaceholder": "Ex: Salário, Freelance...",
+      "amountLabel": "Valor (€)",
+      "amountPlaceholder": "0.00",
+      "categoryLabel": "Categoria",
+      "selectCategory": "Selecione",
+      "registerExpense": "Registrar Saída",
+      "registerIncome": "Registrar Entrada"
+    },
+    "addSubscriptionDialog": {
+      "title": "Nova Assinatura",
+      "description": "Adicione gastos recorrentes mensais (Netflix, Renda, Internet).",
+      "add": "Adicionar",
+      "serviceNameLabel": "Nome do Serviço",
+      "serviceNamePlaceholder": "Ex: Netflix, Ginásio...",
+      "monthlyAmountLabel": "Valor Mensal (€)",
+      "billingDayLabel": "Dia do Vencimento/Cobrança",
+      "selectDay": "Selecione o dia",
+      "day": "Dia",
+      "saveSubscription": "Salvar Assinatura"
+    },
+    "addGoalDialog": {
+      "title": "Novo Objetivo",
+      "newGoal": "Nova Meta",
+      "goalNameLabel": "O que deseja conquistar?",
+      "goalNamePlaceholder": "Ex: Reserva de Emergência, Viagem...",
+      "targetLabel": "Valor do Objetivo (Meta Final)",
+      "targetPlaceholder": "0,00",
+      "targetTip": "Dica: Defina um valor realista para manter a motivação!",
+      "startSaving": "Começar a Poupar",
+      "processing": "A processar...",
+      "success": "Meta criada! Hora de começar a poupar. 💰",
+      "error": "Ocorreu um erro inesperado ao salvar a meta."
+    },
+    "editTransactionDialog": {
+      "title": "Editar Movimentação",
+      "saveChanges": "Salvar Alterações",
+      "updated": "Transação atualizada!"
+    },
+    "historyPage": {
+      "title": "Histórico Completo",
+      "subtitle": "Consulte e gerencie todas as suas movimentações.",
+      "backToDashboard": "Voltar ao Dashboard",
+      "description": "Descrição",
+      "category": "Categoria",
+      "date": "Data",
+      "value": "Valor",
+      "actions": "Ações",
+      "noResults": "Nenhum resultado para os filtros aplicados.",
+      "noTransactions": "Você ainda não possui transações registradas.",
+      "mobileHint": "Toque em uma transação para ver detalhes ou ações."
+    },
+    "historyFilters": {
+      "all": "Tudo",
+      "income": "Entradas",
+      "expense": "Saídas"
+    },
+    "historySearch": {
+      "placeholder": "Procurar transação..."
+    },
+    "settingsPage": {
+      "title": "Configurações",
+      "subtitle": "Ajuste suas preferências do sistema.",
+      "subscription": "Subscrição",
+      "subscriptionDescription": "Gerencie sua subscrição e pagamentos.",
+      "currentPlan": "Plano Atual",
+      "monthly": "Mensal",
+      "annual": "Anual",
+      "free": "Gratuito",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "expiresOn": "Expira em:",
+      "viewPlans": "Ver Planos",
+      "preferences": "Preferências",
+      "preferencesDescription": "Ajuste a moeda padrão do sistema.",
+      "currencyLabel": "Moeda Principal",
+      "saveSettings": "Salvar Configurações",
+      "saving": "A guardar...",
+      "savedSuccess": "Configurações salvas!",
+      "savedDescription": "Sua moeda agora é",
+      "errorSaving": "Erro ao salvar"
+    },
+    "categories": {
+      "Alimentação": "Alimentação",
+      "Transporte": "Transporte",
+      "Lazer": "Lazer",
+      "Saúde": "Saúde",
+      "Salário": "Salário",
+      "Freelance": "Freelance",
+      "Investimentos": "Investimentos",
+      "Outros": "Outros"
+    },
+    "categoryChart": {
+      "title": "Despesas por Categoria",
+      "noData": "Sem dados para exibir",
+      "noDataDescription": "Lance despesas para ver a análise por categoria."
+    },
+    "manageSubscription": {
+      "button": "Gerenciar Subscrição",
+      "loading": "Carregando..."
+    }
+  }
+}
