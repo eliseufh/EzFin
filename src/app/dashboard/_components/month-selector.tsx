@@ -30,9 +30,7 @@ export function MonthSelector() {
     const newDate = new Date(year, month - 1 + direction);
     const newMonth = newDate.getMonth() + 1;
     const newYear = newDate.getFullYear();
-    router.replace(`/dashboard?month=${newMonth}&year=${newYear}`, {
-      scroll: false,
-    });
+    router.push(`/dashboard?month=${newMonth}&year=${newYear}`);
   };
 
   return (

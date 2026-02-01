@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { createGoal } from "@/actions/goal-actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,30 +19,25 @@ import { useTranslations } from "@/i18n/use-translations";
 export function AddGoalDialog() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const { t } = useTranslations();
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
-    setOpen(false);
-    toast.success(t("dashboard.addGoalDialog.success"));
 
-    createGoal(formData)
-      .then((result) => {
-        if (result?.error) {
-          toast.error(result.error);
-        }
-        startTransition(() => {
-          router.refresh();
-        });
-      })
-      .catch(() => {
-        toast.error(t("dashboard.addGoalDialog.error"));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const result = await createGoal(formData);
+
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success(t("dashboard.addGoalDialog.success"));
+        setOpen(false);
+      }
+    } catch (error) {
+      toast.error(t("dashboard.addGoalDialog.error"));
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { updateTransaction } from "@/actions/transaction-actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,26 +39,17 @@ export function EditTransactionDialog({
   transaction: TransactionData;
 }) {
   const [open, setOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const { t } = useTranslations();
 
   async function handleSubmit(formData: FormData) {
-    setOpen(false);
-    toast.success(t("dashboard.editTransactionDialog.updated"));
+    const result = await updateTransaction(formData);
 
-    updateTransaction(formData)
-      .then((result) => {
-        if (result?.error) {
-          toast.error(result.error);
-        }
-        startTransition(() => {
-          router.refresh();
-        });
-      })
-      .catch(() => {
-        toast.error("Erro ao atualizar");
-      });
+    if (result?.error) {
+      toast.error(result.error);
+    } else {
+      toast.success(t("dashboard.editTransactionDialog.updated"));
+      setOpen(false);
+    }
   }
 
   return (

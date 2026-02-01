@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { createSubscription } from "@/actions/transaction-actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,23 +26,13 @@ import { useTranslations } from "@/i18n/use-translations";
 export function AddSubscriptionDialog() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const { t } = useTranslations();
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
+    await createSubscription(formData);
+    setLoading(false);
     setOpen(false);
-
-    createSubscription(formData).then(() => {
-      startTransition(() => {
-        router.refresh();
-      });
-      setLoading(false);
-    });
-  }
-
-  // Gera uma lista de dias de 1 a 31 para o select
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
   return (

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { createTransaction } from "@/actions/transaction-actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,24 +27,13 @@ import { useTranslations } from "@/i18n/use-translations";
 export function AddTransactionDialog() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
   const { t } = useTranslations();
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
-    setOpen(false); // Fecha imediatamente
-
-    // Processa em background
-    createTransaction(formData).then(() => {
-      startTransition(() => {
-        router.refresh();
-      });
-      setLoading(false);
-    });
-  }
-
-  return (
+    await createTransaction(formData);
+    setLoading(false);
+    setOpen(false);
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="bg-green-600 hover:bg-green-700">
