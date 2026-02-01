@@ -40,62 +40,68 @@ export default async function DashboardPage(props: DashboardProps) {
   const startDate = new Date(currentYear, currentMonth - 1, 1);
   const endDate = new Date(currentYear, currentMonth, 0, 23, 59, 59);
 
-  // 3. Buscar transações do mês selecionado (limite 5 para o dashboard)
-  const transactions = await db.transaction.findMany({
-    where: {
-      userId: user.id,
-      date: { gte: startDate, lte: endDate },
-    },
-    orderBy: { date: "desc" },
-    take: 5,
-  });
-
-  // 4. CALCULAR SALDO TOTAL (GLOBAL - Acumulado de sempre)
-  const globalIncome = await db.transaction.aggregate({
-    where: { userId: user.id, type: "income" },
-    _sum: { amount: true },
-  });
-
-  const globalExpense = await db.transaction.aggregate({
-    where: { userId: user.id, type: "expense" },
-    _sum: { amount: true },
-  });
+  // 3-6. PARALELIZAR TODAS AS QUERIES para melhor performance
+  const [
+    transactions,
+    globalIncome,
+    globalExpense,
+    monthlyIncomeAgg,
+    monthlyExpenseAgg,
+    expensesByCategory,
+  ] = await Promise.all([
+    // Transações do mês
+    db.transaction.findMany({
+      where: {
+        userId: user.id,
+        date: { gte: startDate, lte: endDate },
+      },
+      orderBy: { date: "desc" },
+      take: 5,
+    }),
+    // Saldo global - income
+    db.transaction.aggregate({
+      where: { userId: user.id, type: "income" },
+      _sum: { amount: true },
+    }),
+    // Saldo global - expense
+    db.transaction.aggregate({
+      where: { userId: user.id, type: "expense" },
+      _sum: { amount: true },
+    }),
+    // Receitas do mês
+    db.transaction.aggregate({
+      where: {
+        userId: user.id,
+        type: "income",
+        date: { gte: startDate, lte: endDate },
+      },
+      _sum: { amount: true },
+    }),
+    // Despesas do mês
+    db.transaction.aggregate({
+      where: {
+        userId: user.id,
+        type: "expense",
+        date: { gte: startDate, lte: endDate },
+      },
+      _sum: { amount: true },
+    }),
+    // Gastos por categoria
+    db.transaction.groupBy({
+      by: ["category"],
+      where: {
+        userId: user.id,
+        type: "expense",
+        date: { gte: startDate, lte: endDate },
+      },
+      _sum: { amount: true },
+    }),
+  ]);
 
   const totalBalance =
     (globalIncome._sum.amount || 0) - (globalExpense._sum.amount || 0);
-
-  // 5. CALCULAR TOTAIS DO MÊS SELECIONADO
-  const monthlyIncomeAgg = await db.transaction.aggregate({
-    where: {
-      userId: user.id,
-      type: "income",
-      date: { gte: startDate, lte: endDate },
-    },
-    _sum: { amount: true },
-  });
-
-  const monthlyExpenseAgg = await db.transaction.aggregate({
-    where: {
-      userId: user.id,
-      type: "expense",
-      date: { gte: startDate, lte: endDate },
-    },
-    _sum: { amount: true },
-  });
-
   const currentMonthIncome = monthlyIncomeAgg._sum.amount || 0;
   const currentMonthExpense = monthlyExpenseAgg._sum.amount || 0;
-
-  // 6. DADOS PARA O GRÁFICO (Gastos por Categoria no mês selecionado)
-  const expensesByCategory = await db.transaction.groupBy({
-    by: ["category"],
-    where: {
-      userId: user.id,
-      type: "expense",
-      date: { gte: startDate, lte: endDate },
-    },
-    _sum: { amount: true },
-  });
 
   const chartData = expensesByCategory.map((item) => ({
     name: item.category,
