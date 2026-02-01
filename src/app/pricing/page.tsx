@@ -10,30 +10,8 @@ import { useTranslations } from "@/i18n/use-translations";
 
 export default function PricingPage() {
   const [loading, setLoading] = useState<string | null>(null);
-  const [checkingSubscription, setCheckingSubscription] = useState(true);
   const router = useRouter();
   const { t } = useTranslations();
-
-  // Verifica se usuário já tem subscrição ativa
-  useEffect(() => {
-    async function checkSubscription() {
-      try {
-        const response = await fetch("/api/check-subscription");
-        const data = await response.json();
-
-        if (data.hasActiveSubscription) {
-          // Se já tiver subscrição, vai direto para o dashboard
-          router.push("/dashboard");
-        }
-      } catch (error) {
-        console.error("Erro ao verificar subscrição:", error);
-      } finally {
-        setCheckingSubscription(false);
-      }
-    }
-
-    checkSubscription();
-  }, [router]);
 
   const handleSubscribe = async (plan: "monthly" | "annual") => {
     setLoading(plan);
@@ -59,15 +37,6 @@ export default function PricingPage() {
       setLoading(null);
     }
   };
-
-  // Mostra loading enquanto verifica subscrição
-  if (checkingSubscription) {
-    return (
-      <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-white text-xl">Carregando...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
