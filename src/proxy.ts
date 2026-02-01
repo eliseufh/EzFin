@@ -24,10 +24,6 @@ export default clerkMiddleware(async (auth, request) => {
     signInUrl.searchParams.set("redirect_url", pathname);
     response = NextResponse.redirect(signInUrl);
   }
-  // Se está logado e acessa a home, redireciona para dashboard
-  else if (userId && pathname === "/") {
-    response = NextResponse.redirect(new URL("/dashboard", request.url));
-  }
   else {
     response = NextResponse.next();
   }
