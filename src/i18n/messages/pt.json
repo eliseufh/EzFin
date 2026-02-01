@@ -97,7 +97,8 @@
       "category": "Categoria",
       "type": "Tipo",
       "date": "Data",
-      "name": "Nome"
+      "name": "Nome",
+      "saving": "Guardando..."
     },
     "types": {
       "income": "Receita",

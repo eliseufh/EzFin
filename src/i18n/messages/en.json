@@ -97,7 +97,8 @@
       "category": "Category",
       "type": "Type",
       "date": "Date",
-      "name": "Name"
+      "name": "Name",
+      "saving": "Saving..."
     },
     "types": {
       "income": "Income",
