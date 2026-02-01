@@ -208,7 +208,9 @@
     },
     "manageSubscription": {
       "button": "Manage Subscription",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "errorPortal": "Error accessing payment portal",
+      "errorRequest": "Error processing request"
     }
   }
 }
