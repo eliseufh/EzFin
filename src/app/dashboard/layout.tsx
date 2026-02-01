@@ -1,8 +1,10 @@
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { LayoutDashboard, Settings, Wallet } from "lucide-react";
+import { Wallet } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "./_components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { DashboardNav } from "./_components/dashboard-nav";
 
 export default function DashboardLayout({
   children,
@@ -23,26 +25,12 @@ export default function DashboardLayout({
               <span className="hidden xs:block">EzFin</span>
             </Link>
 
-            <nav className="flex items-center gap-3 md:gap-6 text-xs md:text-sm font-medium text-slate-600 dark:text-slate-300">
-              <Link
-                href="/dashboard"
-                className="hover:text-green-600 dark:hover:text-green-400 flex items-center gap-1"
-              >
-                <LayoutDashboard className="h-4 w-4" />
-                <span className="hidden sm:inline">Visão Geral</span>
-              </Link>
-              <Link
-                href="/dashboard/settings"
-                className="hover:text-green-600 dark:hover:text-green-400 flex items-center gap-1"
-              >
-                <Settings className="h-4 w-4" />
-                <span className="hidden sm:inline">Ajustes</span>
-              </Link>
-            </nav>
+            <DashboardNav />
           </div>
 
-          {/* Botão de tema e UserButton */}
+          {/* Botão de tema, idioma e UserButton */}
           <div className="flex items-center gap-2 justify-end min-w-10 z-110">
+            <LanguageSwitcher />
             <ThemeToggle />
             <UserButton
               afterSignOutUrl="/"
