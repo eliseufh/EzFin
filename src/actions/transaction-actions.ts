@@ -25,11 +25,12 @@ export async function createTransaction(formData: FormData) {
       description,
       type,
       category,
-      date: new Date(), // Pega a data de agora
+      date: new Date(),
     },
   });
 
-  revalidatePath("/dashboard"); // Atualiza a tela instantaneamente
+  revalidatePath("/dashboard", "page");
+  revalidatePath("/dashboard/history", "page");
   return { success: true };
 }
 
@@ -52,7 +53,7 @@ export async function createSubscription(formData: FormData) {
     },
   });
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dashboard", "page");
   return { success: true };
 }
 
@@ -69,7 +70,8 @@ export async function deleteTransaction(id: string) {
     },
   });
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dashboard", "page");
+  revalidatePath("/dashboard/history", "page");
   return { success: true };
 }
 
@@ -85,7 +87,7 @@ export async function deleteSubscription(id: string) {
     },
   });
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dashboard", "page");
   return { success: true };
 }
 
@@ -104,15 +106,12 @@ export async function updateTransaction(formData: FormData) {
     return { error: "Dados inválidos." };
   }
 
-  // Verifica se a transação é mesmo desse usuário antes de alterar
-  const transaction = await db.transaction.findFirst({
-    where: { id, userId: user.id },
-  });
-
-  if (!transaction) return { error: "Transação não encontrada." };
-
+  // Atualiza apenas se pertencer ao usuário
   await db.transaction.update({
-    where: { id },
+    where: { 
+      id,
+      userId: user.id,
+    },
     data: {
       amount,
       description,
@@ -121,6 +120,7 @@ export async function updateTransaction(formData: FormData) {
     },
   });
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dashboard", "page");
+  revalidatePath("/dashboard/history", "page");
   return { success: true };
 }
