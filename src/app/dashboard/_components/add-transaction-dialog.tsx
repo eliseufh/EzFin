@@ -22,9 +22,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PlusCircle } from "lucide-react";
+import { useTranslations } from "@/i18n/use-translations";
 
 export function AddTransactionDialog() {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslations();
 
   async function handleSubmit(formData: FormData) {
     await createTransaction(formData);
@@ -36,21 +38,21 @@ export function AddTransactionDialog() {
       <DialogTrigger asChild>
         <Button className="bg-green-600 hover:bg-green-700">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Nova Transação
+          {t("dashboard.addTransactionDialog.newTransaction")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
-          <DialogTitle>Adicionar Movimentação</DialogTitle>
+          <DialogTitle>{t("dashboard.addTransactionDialog.title")}</DialogTitle>
           <DialogDescription>
-            Registre manualmente um gasto ou uma entrada extra.
+            {t("dashboard.addTransactionDialog.description")}
           </DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="expense" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="expense">Despesa</TabsTrigger>
-            <TabsTrigger value="income">Receita</TabsTrigger>
+            <TabsTrigger value="expense">{t("dashboard.addTransactionDialog.expense")}</TabsTrigger>
+            <TabsTrigger value="income">{t("dashboard.addTransactionDialog.income")}</TabsTrigger>
           </TabsList>
 
           {/* ABA DE DESPESA */}
@@ -59,37 +61,37 @@ export function AddTransactionDialog() {
               <input type="hidden" name="type" value="expense" />
 
               <div className="grid gap-2">
-                <Label>Descrição</Label>
+                <Label>{t("dashboard.form.description")}</Label>
                 <Input
                   name="description"
-                  placeholder="Ex: Mercado, Uber..."
+                  placeholder={t("dashboard.addTransactionDialog.descriptionPlaceholder")}
                   required
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label>Valor (€)</Label>
+                <Label>{t("dashboard.addTransactionDialog.amountLabel")}</Label>
                 <Input
                   name="amount"
                   type="number"
                   step="0.01"
-                  placeholder="0.00"
+                  placeholder={t("dashboard.addTransactionDialog.amountPlaceholder")}
                   required
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label>Categoria</Label>
+                <Label>{t("dashboard.addTransactionDialog.categoryLabel")}</Label>
                 <Select name="category" defaultValue="Outros">
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
+                    <SelectValue placeholder={t("dashboard.addTransactionDialog.selectCategory")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Alimentação">Alimentação</SelectItem>
-                    <SelectItem value="Transporte">Transporte</SelectItem>
-                    <SelectItem value="Lazer">Lazer</SelectItem>
-                    <SelectItem value="Saúde">Saúde</SelectItem>
-                    <SelectItem value="Outros">Outros</SelectItem>
+                    <SelectItem value="Alimentação">{t("dashboard.categories.Alimentação")}</SelectItem>
+                    <SelectItem value="Transporte">{t("dashboard.categories.Transporte")}</SelectItem>
+                    <SelectItem value="Lazer">{t("dashboard.categories.Lazer")}</SelectItem>
+                    <SelectItem value="Saúde">{t("dashboard.categories.Saúde")}</SelectItem>
+                    <SelectItem value="Outros">{t("dashboard.categories.Outros")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -98,7 +100,7 @@ export function AddTransactionDialog() {
                 type="submit"
                 className="w-full bg-red-600 hover:bg-red-700"
               >
-                Registrar Saída
+                {t("dashboard.addTransactionDialog.registerExpense")}
               </Button>
             </form>
           </TabsContent>
@@ -109,36 +111,36 @@ export function AddTransactionDialog() {
               <input type="hidden" name="type" value="income" />
 
               <div className="grid gap-2">
-                <Label>Descrição</Label>
+                <Label>{t("dashboard.form.description")}</Label>
                 <Input
                   name="description"
-                  placeholder="Ex: Salário, Freelance..."
+                  placeholder={t("dashboard.addTransactionDialog.incomePlaceholder")}
                   required
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label>Valor (€)</Label>
+                <Label>{t("dashboard.addTransactionDialog.amountLabel")}</Label>
                 <Input
                   name="amount"
                   type="number"
                   step="0.01"
-                  placeholder="0.00"
+                  placeholder={t("dashboard.addTransactionDialog.amountPlaceholder")}
                   required
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label>Categoria</Label>
+                <Label>{t("dashboard.addTransactionDialog.categoryLabel")}</Label>
                 <Select name="category" defaultValue="Salário">
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione" />
+                    <SelectValue placeholder={t("dashboard.addTransactionDialog.selectCategory")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Salário">Salário</SelectItem>
-                    <SelectItem value="Freelance">Freelance</SelectItem>
-                    <SelectItem value="Investimentos">Investimentos</SelectItem>
-                    <SelectItem value="Outros">Outros</SelectItem>
+                    <SelectItem value="Salário">{t("dashboard.categories.Salário")}</SelectItem>
+                    <SelectItem value="Freelance">{t("dashboard.categories.Freelance")}</SelectItem>
+                    <SelectItem value="Investimentos">{t("dashboard.categories.Investimentos")}</SelectItem>
+                    <SelectItem value="Outros">{t("dashboard.categories.Outros")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -147,7 +149,7 @@ export function AddTransactionDialog() {
                 type="submit"
                 className="w-full bg-green-600 hover:bg-green-700"
               >
-                Registrar Entrada
+                {t("dashboard.addTransactionDialog.registerIncome")}
               </Button>
             </form>
           </TabsContent>
