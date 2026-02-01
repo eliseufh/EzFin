@@ -56,7 +56,10 @@ export default function Home() {
 
           <SignedOut>
             <SignInButton mode="modal">
-              <Button size="sm" variant="default">
+              <Button
+                size="sm"
+                className="bg-white text-slate-900 hover:bg-slate-100"
+              >
                 Entrar
               </Button>
             </SignInButton>
@@ -96,7 +99,10 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <SignedOut>
               <SignInButton mode="modal">
-                <Button size="lg" className="text-base px-8">
+                <Button
+                  size="lg"
+                  className="text-base px-8 bg-white text-slate-900 hover:bg-slate-100"
+                >
                   Ver Planos
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
