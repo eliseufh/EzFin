@@ -13,6 +13,7 @@ export async function getEzFinUser() {
     where: {
       email: clerkUser.emailAddresses[0].emailAddress,
     },
+    cacheStrategy: { ttl: 300, swr: 600 },
   });
 
   // Criar o nome completo corretamente
