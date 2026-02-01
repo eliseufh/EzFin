@@ -34,6 +34,9 @@ export function AddTransactionDialog() {
     await createTransaction(formData);
     setLoading(false);
     setOpen(false);
+  }
+
+  return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="bg-green-600 hover:bg-green-700">

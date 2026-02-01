@@ -33,6 +33,8 @@ export function AddSubscriptionDialog() {
     await createSubscription(formData);
     setLoading(false);
     setOpen(false);
+  }
+
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
   return (
