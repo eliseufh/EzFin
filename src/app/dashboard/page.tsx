@@ -115,7 +115,7 @@ export default async function DashboardPage(props: DashboardProps) {
   const currentMonthIncome = monthlyIncomeAgg._sum.amount || 0;
   const currentMonthExpense = monthlyExpenseAgg._sum.amount || 0;
 
-  const chartData = expensesByCategory.map((item) => ({
+  const chartData = expensesByCategory.map((item: any) => ({
     name: item.category,
     value: item._sum.amount || 0,
   }));
