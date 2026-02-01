@@ -40,7 +40,7 @@ export default async function DashboardPage(props: DashboardProps) {
   const startDate = new Date(currentYear, currentMonth - 1, 1);
   const endDate = new Date(currentYear, currentMonth, 0, 23, 59, 59);
 
-  // 3-6. PARALELIZAR TODAS AS QUERIES para melhor performance
+  // 3-8. PARALELIZAR TODAS AS QUERIES (incluindo subscriptions e goals!)
   const [
     transactions,
     globalIncome,
@@ -48,6 +48,8 @@ export default async function DashboardPage(props: DashboardProps) {
     monthlyIncomeAgg,
     monthlyExpenseAgg,
     expensesByCategory,
+    subscriptions,
+    goals,
   ] = await Promise.all([
     // Transações do mês
     db.transaction.findMany({
@@ -96,6 +98,16 @@ export default async function DashboardPage(props: DashboardProps) {
       },
       _sum: { amount: true },
     }),
+    // Assinaturas
+    db.subscription.findMany({
+      where: { userId: user.id },
+      orderBy: { billingDay: "asc" },
+    }),
+    // Metas
+    db.goal.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: "desc" },
+    }),
   ]);
 
   const totalBalance =
@@ -107,17 +119,6 @@ export default async function DashboardPage(props: DashboardProps) {
     name: item.category,
     value: item._sum.amount || 0,
   }));
-
-  // 7. Buscar Assinaturas e Metas
-  const subscriptions = await db.subscription.findMany({
-    where: { userId: user.id },
-    orderBy: { billingDay: "asc" },
-  });
-
-  const goals = await db.goal.findMany({
-    where: { userId: user.id },
-    orderBy: { createdAt: "desc" },
-  });
 
   return (
     <DashboardContent
