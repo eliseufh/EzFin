@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "./_components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { DashboardNav } from "./_components/dashboard-nav";
+import { NavigationProgress } from "@/components/navigation-progress";
 
 export default function DashboardLayout({
   children,
@@ -46,6 +47,7 @@ export default function DashboardLayout({
 
       {/* Conteúdo da Página */}
       <main>{children}</main>
+      <NavigationProgress />
       <Toaster richColors position="top-center" />
     </div>
   );
