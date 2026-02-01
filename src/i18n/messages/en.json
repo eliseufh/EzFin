@@ -1,0 +1,214 @@
+{
+  "home": {
+    "badge": "Simplified financial management",
+    "title": "Control your finances",
+    "titleHighlight": "intelligently",
+    "description": "EzFin is the complete platform to manage your expenses, income, subscriptions and financial goals in one place.",
+    "viewPlans": "View Plans",
+    "signIn": "Sign In",
+    "goToDashboard": "Go to Dashboard",
+    "features": {
+      "title": "Everything you need in one place",
+      "subtitle": "Powerful features to simplify your financial life",
+      "transactions": {
+        "title": "Smart Transactions",
+        "description": "Record income and expenses with automatic categorization and view your spending in real time."
+      },
+      "subscriptions": {
+        "title": "Subscription Management",
+        "description": "Track all your subscriptions and recurring expenses with due date reminders."
+      },
+      "goals": {
+        "title": "Financial Goals",
+        "description": "Set savings goals and track your progress towards your financial targets."
+      },
+      "analytics": {
+        "title": "Visual Analytics",
+        "description": "Detailed charts and reports to understand where your money is going."
+      },
+      "fast": {
+        "title": "Fast and Intuitive",
+        "description": "Modern and responsive interface that works perfectly on all devices."
+      },
+      "secure": {
+        "title": "Secure and Private",
+        "description": "Your financial data is protected with secure authentication and modern encryption."
+      }
+    },
+    "cta": {
+      "title": "Ready to transform your finances?",
+      "subtitle": "Plans starting at €4.99/month. Take full control of your money today.",
+      "choosePlan": "Choose Plan",
+      "accessDashboard": "Access Dashboard"
+    },
+    "footer": {
+      "copyright": "© 2026 EzFin. Simplified financial management for everyone."
+    }
+  },
+  "pricing": {
+    "title": "Choose the Perfect Plan",
+    "subtitle": "Start managing your finances intelligently",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save": "Save 17%",
+    "month": "/month",
+    "year": "/year",
+    "selectPlan": "Select Plan",
+    "currentPlan": "Current Plan",
+    "bestOffer": "BEST OFFER",
+    "securePayment": "Secure payment processed by",
+    "cancelAnytime": "Cancel anytime. No hidden fees.",
+    "features": {
+      "transactions": "Unlimited transactions",
+      "subscriptions": "Subscription management",
+      "goals": "Financial goals",
+      "reports": "Detailed reports",
+      "categories": "Automatic categorization",
+      "support": "Priority support"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "overview": "Overview",
+    "history": "History",
+    "settings": "Settings",
+    "balance": "Balance",
+    "income": "Income",
+    "expenses": "Expenses",
+    "thisMonth": "This Month",
+    "subscriptions": "Subscriptions",
+    "goals": "Goals",
+    "recentTransactions": "Recent Transactions",
+    "addTransaction": "Add Transaction",
+    "addSubscription": "Add Subscription",
+    "addGoal": "Add Goal",
+    "categories": "Categories",
+    "noData": "No data to display",
+    "loading": "Loading...",
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "form": {
+      "description": "Description",
+      "amount": "Amount",
+      "category": "Category",
+      "type": "Type",
+      "date": "Date",
+      "name": "Name"
+    },
+    "types": {
+      "income": "Income",
+      "expense": "Expense"
+    },
+    "addTransactionDialog": {
+      "title": "Add Transaction",
+      "description": "Manually record an expense or extra income.",
+      "newTransaction": "New Transaction",
+      "expense": "Expense",
+      "income": "Income",
+      "descriptionPlaceholder": "E.g.: Groceries, Uber...",
+      "incomePlaceholder": "E.g.: Salary, Freelance...",
+      "amountLabel": "Amount (€)",
+      "amountPlaceholder": "0.00",
+      "categoryLabel": "Category",
+      "selectCategory": "Select",
+      "registerExpense": "Record Expense",
+      "registerIncome": "Record Income"
+    },
+    "addSubscriptionDialog": {
+      "title": "New Subscription",
+      "description": "Add monthly recurring expenses (Netflix, Rent, Internet).",
+      "add": "Add",
+      "serviceNameLabel": "Service Name",
+      "serviceNamePlaceholder": "E.g.: Netflix, Gym...",
+      "monthlyAmountLabel": "Monthly Amount (€)",
+      "billingDayLabel": "Billing/Due Date",
+      "selectDay": "Select day",
+      "day": "Day",
+      "saveSubscription": "Save Subscription"
+    },
+    "addGoalDialog": {
+      "title": "New Goal",
+      "newGoal": "New Goal",
+      "goalNameLabel": "What do you want to achieve?",
+      "goalNamePlaceholder": "E.g.: Emergency Fund, Trip...",
+      "targetLabel": "Goal Amount (Final Target)",
+      "targetPlaceholder": "0.00",
+      "targetTip": "Tip: Set a realistic goal to stay motivated!",
+      "startSaving": "Start Saving",
+      "processing": "Processing...",
+      "success": "Goal created! Time to start saving. 💰",
+      "error": "An unexpected error occurred while saving the goal."
+    },
+    "editTransactionDialog": {
+      "title": "Edit Transaction",
+      "saveChanges": "Save Changes",
+      "updated": "Transaction updated!"
+    },
+    "historyPage": {
+      "title": "Complete History",
+      "subtitle": "View and manage all your transactions.",
+      "backToDashboard": "Back to Dashboard",
+      "description": "Description",
+      "category": "Category",
+      "date": "Date",
+      "value": "Amount",
+      "actions": "Actions",
+      "noResults": "No results for the applied filters.",
+      "noTransactions": "You don't have any recorded transactions yet.",
+      "mobileHint": "Tap a transaction to view details or actions."
+    },
+    "historyFilters": {
+      "all": "All",
+      "income": "Income",
+      "expense": "Expenses"
+    },
+    "historySearch": {
+      "placeholder": "Search transaction..."
+    },
+    "settingsPage": {
+      "title": "Settings",
+      "subtitle": "Adjust your system preferences.",
+      "subscription": "Subscription",
+      "subscriptionDescription": "Manage your subscription and payments.",
+      "currentPlan": "Current Plan",
+      "monthly": "Monthly",
+      "annual": "Annual",
+      "free": "Free",
+      "active": "Active",
+      "inactive": "Inactive",
+      "expiresOn": "Expires on:",
+      "viewPlans": "View Plans",
+      "preferences": "Preferences",
+      "preferencesDescription": "Adjust the default currency of the system.",
+      "currencyLabel": "Main Currency",
+      "saveSettings": "Save Settings",
+      "saving": "Saving...",
+      "savedSuccess": "Settings saved!",
+      "savedDescription": "Your currency is now",
+      "errorSaving": "Error saving"
+    },
+    "categories": {
+      "Alimentação": "Food",
+      "Transporte": "Transport",
+      "Lazer": "Entertainment",
+      "Saúde": "Health",
+      "Salário": "Salary",
+      "Freelance": "Freelance",
+      "Investimentos": "Investments",
+      "Outros": "Other"
+    },
+    "categoryChart": {
+      "title": "Expenses by Category",
+      "noData": "No data to display",
+      "noDataDescription": "Add expenses to see category analysis."
+    },
+    "manageSubscription": {
+      "button": "Manage Subscription",
+      "loading": "Loading..."
+    }
+  }
+}
