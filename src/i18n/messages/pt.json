@@ -208,7 +208,9 @@
     },
     "manageSubscription": {
       "button": "Gerenciar Subscrição",
-      "loading": "Carregando..."
+      "loading": "Carregando...",
+      "errorPortal": "Erro ao acessar portal de pagamentos",
+      "errorRequest": "Erro ao processar solicitação"
     }
   }
 }
