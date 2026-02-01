@@ -45,9 +45,6 @@ export function AddGoalDialog() {
         setLoading(false);
       });
   }
-      setLoading(false);
-    }
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
