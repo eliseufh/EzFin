@@ -29,8 +29,7 @@ export async function createTransaction(formData: FormData) {
     },
   });
 
-  revalidatePath("/dashboard", "page");
-  revalidatePath("/dashboard/history", "page");
+  revalidatePath("/dashboard");
   return { success: true };
 }
 
@@ -62,7 +61,6 @@ export async function deleteTransaction(id: string) {
   const user = await getEzFinUser();
   if (!user) return { error: "Não autorizado" };
 
-  // Garante que a transação pertence mesmo ao usuário antes de deletar
   await db.transaction.delete({
     where: {
       id: id,
@@ -70,8 +68,7 @@ export async function deleteTransaction(id: string) {
     },
   });
 
-  revalidatePath("/dashboard", "page");
-  revalidatePath("/dashboard/history", "page");
+  revalidatePath("/dashboard");
   return { success: true };
 }
 
@@ -106,7 +103,6 @@ export async function updateTransaction(formData: FormData) {
     return { error: "Dados inválidos." };
   }
 
-  // Atualiza apenas se pertencer ao usuário
   await db.transaction.update({
     where: { 
       id,
@@ -120,7 +116,6 @@ export async function updateTransaction(formData: FormData) {
     },
   });
 
-  revalidatePath("/dashboard", "page");
-  revalidatePath("/dashboard/history", "page");
+  revalidatePath("/dashboard");
   return { success: true };
 }
