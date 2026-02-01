@@ -59,16 +59,19 @@ export default async function DashboardPage(props: DashboardProps) {
       },
       orderBy: { date: "desc" },
       take: 5,
+      cacheStrategy: { ttl: 60, swr: 120 },
     }),
     // Saldo global - income
     db.transaction.aggregate({
       where: { userId: user.id, type: "income" },
       _sum: { amount: true },
+      cacheStrategy: { ttl: 60, swr: 120 },
     }),
     // Saldo global - expense
     db.transaction.aggregate({
       where: { userId: user.id, type: "expense" },
       _sum: { amount: true },
+      cacheStrategy: { ttl: 60, swr: 120 },
     }),
     // Receitas do mês
     db.transaction.aggregate({
@@ -78,6 +81,7 @@ export default async function DashboardPage(props: DashboardProps) {
         date: { gte: startDate, lte: endDate },
       },
       _sum: { amount: true },
+      cacheStrategy: { ttl: 60, swr: 120 },
     }),
     // Despesas do mês
     db.transaction.aggregate({
@@ -87,6 +91,7 @@ export default async function DashboardPage(props: DashboardProps) {
         date: { gte: startDate, lte: endDate },
       },
       _sum: { amount: true },
+      cacheStrategy: { ttl: 60, swr: 120 },
     }),
     // Gastos por categoria
     db.transaction.groupBy({
@@ -97,16 +102,19 @@ export default async function DashboardPage(props: DashboardProps) {
         date: { gte: startDate, lte: endDate },
       },
       _sum: { amount: true },
+      cacheStrategy: { ttl: 60, swr: 120 },
     }),
     // Assinaturas
     db.subscription.findMany({
       where: { userId: user.id },
       orderBy: { billingDay: "asc" },
+      cacheStrategy: { ttl: 120, swr: 240 },
     }),
     // Metas
     db.goal.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
+      cacheStrategy: { ttl: 120, swr: 240 },
     }),
   ]);
 
