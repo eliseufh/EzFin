@@ -15,8 +15,9 @@ export default async function HistoryPage(props: HistoryPageProps) {
   const query = searchParams.q || "";
   const typeFilter = searchParams.type; // 'income' | 'expense' ou undefined
 
-  // 2. Validar Usuário
-  const user = await getEzFinUser();
+  // 2. Paralelizar queries para melhor performance
+  const [user] = await Promise.all([getEzFinUser()]);
+
   if (!user) redirect("/");
 
   // 3. Buscar Transações com Filtros dinâmicos
