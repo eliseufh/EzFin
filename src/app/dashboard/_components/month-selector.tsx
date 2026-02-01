@@ -30,8 +30,9 @@ export function MonthSelector() {
     const newDate = new Date(year, month - 1 + direction);
     const newMonth = newDate.getMonth() + 1;
     const newYear = newDate.getFullYear();
-    // Forçamos a atualização da URL
-    router.push(`/dashboard?month=${newMonth}&year=${newYear}`);
+    router.replace(`/dashboard?month=${newMonth}&year=${newYear}`, {
+      scroll: false,
+    });
   };
 
   return (
