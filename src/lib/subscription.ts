@@ -27,6 +27,7 @@ export async function checkSubscription(): Promise<boolean> {
       subscriptionStatus: true,
       subscriptionEndsAt: true,
     },
+    cacheStrategy: { ttl: 300, swr: 600 },
   });
 
   if (!dbUser) {
