@@ -25,10 +25,13 @@ import { useTranslations } from "@/i18n/use-translations";
 
 export function AddSubscriptionDialog() {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslations();
 
   async function handleSubmit(formData: FormData) {
+    setLoading(true);
     await createSubscription(formData);
+    setLoading(false);
     setOpen(false);
   }
 
@@ -102,8 +105,10 @@ export function AddSubscriptionDialog() {
             </Select>
           </div>
 
-          <Button type="submit" className="w-full">
-            {t("dashboard.addSubscriptionDialog.saveSubscription")}
+          <Button type="submit" disabled={loading} className="w-full">
+            {loading
+              ? t("dashboard.form.saving")
+              : t("dashboard.addSubscriptionDialog.saveSubscription")}
           </Button>
         </form>
       </DialogContent>
