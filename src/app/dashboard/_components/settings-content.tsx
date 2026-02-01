@@ -14,16 +14,15 @@ import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-interface SubscriptionData {
-  plan: "free" | "monthly" | "annual";
-  subscriptionStatus: string;
-  subscriptionEndsAt?: Date;
-  stripeCustomerId?: string;
-}
-
 interface SettingsContentProps {
   initialCurrency: string;
-  subscriptionData: SubscriptionData | null;
+  subscriptionData: {
+    plan: string;
+    stripeCustomerId: string | null;
+    stripeSubscriptionId: string | null;
+    subscriptionStatus: string;
+    subscriptionEndsAt: Date | null;
+  } | null;
 }
 
 export function SettingsContent({
