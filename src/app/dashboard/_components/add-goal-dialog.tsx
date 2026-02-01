@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { createGoal } from "@/actions/goal-actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,25 +20,31 @@ import { useTranslations } from "@/i18n/use-translations";
 export function AddGoalDialog() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const { t } = useTranslations();
 
-  // Função que lida com o envio do formulário
   async function handleSubmit(formData: FormData) {
     setLoading(true);
+    setOpen(false);
+    toast.success(t("dashboard.addGoalDialog.success"));
 
-    try {
-      // Chamamos a Action e capturamos o retorno (error ou success)
-      const result = await createGoal(formData);
-
-      if (result?.error) {
-        toast.error(result.error);
-      } else {
-        toast.success(t("dashboard.addGoalDialog.success"));
-        setOpen(false); // Fecha o modal apenas em caso de sucesso
-      }
-    } catch (error) {
-      toast.error(t("dashboard.addGoalDialog.error"));
-    } finally {
+    createGoal(formData)
+      .then((result) => {
+        if (result?.error) {
+          toast.error(result.error);
+        }
+        startTransition(() => {
+          router.refresh();
+        });
+      })
+      .catch(() => {
+        toast.error(t("dashboard.addGoalDialog.error"));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
       setLoading(false);
     }
   }
