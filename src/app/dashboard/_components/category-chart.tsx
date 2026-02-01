@@ -1,7 +1,15 @@
 "use client";
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 import { PieChart as PieIcon } from "lucide-react"; // Importamos o ícone oficial
+import { useTranslations } from "@/i18n/use-translations";
 
 interface DataItem {
   name: string;
@@ -17,9 +25,18 @@ interface PieLabelProps {
   percent: number;
 }
 
-const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
+const COLORS = [
+  "#10b981",
+  "#3b82f6",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+];
 
 export function CategoryChart({ data }: { data: DataItem[] }) {
+  const { t } = useTranslations();
+
   if (data.length === 0) {
     return (
       <div className="h-[300px] flex flex-col items-center justify-center text-slate-500 gap-3">
@@ -28,8 +45,12 @@ export function CategoryChart({ data }: { data: DataItem[] }) {
           <PieIcon className="h-8 w-8 text-slate-300" />
         </div>
         <div className="text-center">
-          <p className="text-sm font-medium text-slate-600">Sem dados para exibir</p>
-          <p className="text-[11px] text-slate-400">Lance despesas para ver a análise por categoria.</p>
+          <p className="text-sm font-medium text-slate-600">
+            {t("dashboard.categoryChart.noData")}
+          </p>
+          <p className="text-[11px] text-slate-400">
+            {t("dashboard.categoryChart.noDataDescription")}
+          </p>
         </div>
       </div>
     );
@@ -75,11 +96,11 @@ export function CategoryChart({ data }: { data: DataItem[] }) {
             dataKey="value"
           >
             {data.map((_, index) => (
-              <Cell 
-                key={`cell-${index}`} 
-                fill={COLORS[index % COLORS.length]} 
-                stroke="white" 
-                strokeWidth={2} 
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+                stroke="white"
+                strokeWidth={2}
               />
             ))}
           </Pie>
@@ -91,11 +112,11 @@ export function CategoryChart({ data }: { data: DataItem[] }) {
             }}
             formatter={(value: number) => `€ ${value.toFixed(2)}`}
           />
-          <Legend 
-            iconType="circle" 
-            layout="horizontal" 
-            verticalAlign="bottom" 
-            align="center" 
+          <Legend
+            iconType="circle"
+            layout="horizontal"
+            verticalAlign="bottom"
+            align="center"
           />
         </PieChart>
       </ResponsiveContainer>
