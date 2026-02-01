@@ -6,10 +6,13 @@ import { SettingsContent } from "../_components/settings-content";
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const user = await getEzFinUser();
-  if (!user) redirect("/");
+  // Paralelizar queries para melhor performance
+  const [user, subscriptionData] = await Promise.all([
+    getEzFinUser(),
+    getSubscriptionData(),
+  ]);
 
-  const subscriptionData = await getSubscriptionData();
+  if (!user) redirect("/");
 
   return (
     <SettingsContent
