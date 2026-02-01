@@ -124,3 +124,39 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Estilos para o menu do Clerk no modo escuro */
+.dark .cl-userButtonPopoverCard {
+  background-color: rgb(30 41 59) !important;
+}
+
+.dark .cl-userButtonPopoverMain,
+.dark .cl-userButtonPopoverFooter {
+  background-color: rgb(30 41 59) !important;
+}
+
+.dark .cl-userButtonPopoverActionButton,
+.dark .cl-userButtonPopoverActionButton__manageAccount,
+.dark .cl-userButtonPopoverActionButton__signOut {
+  color: rgb(255 255 255) !important;
+}
+
+.dark .cl-userButtonPopoverActionButton:hover {
+  background-color: rgb(51 65 85) !important;
+}
+
+.dark .cl-userButtonPopoverActionButtonText {
+  color: rgb(255 255 255) !important;
+}
+
+.dark .cl-userButtonPopoverActionButtonIcon {
+  color: rgb(148 163 184) !important;
+}
+
+.dark .cl-userPreviewMainIdentifier {
+  color: rgb(255 255 255) !important;
+}
+
+.dark .cl-userPreviewSecondaryIdentifier {
+  color: rgb(148 163 184) !important;
+}

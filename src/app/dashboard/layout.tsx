@@ -37,7 +37,20 @@ export default function DashboardLayout({
               afterSignOutUrl="/"
               appearance={{
                 elements: {
-                  userButtonAvatarBox: "h-9 w-9", // Aumenta um pouco o tamanho do toque
+                  userButtonAvatarBox: "h-9 w-9",
+                  card: "bg-white dark:bg-slate-800",
+                  userButtonPopoverCard: "bg-white dark:bg-slate-800",
+                  userButtonPopoverMain: "bg-white dark:bg-slate-800",
+                  userButtonPopoverFooter: "bg-white dark:bg-slate-800",
+                  userPreviewMainIdentifier: "text-slate-900 dark:text-white",
+                  userPreviewSecondaryIdentifier:
+                    "text-slate-600 dark:text-slate-400",
+                  userButtonPopoverActionButton:
+                    "text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700",
+                  userButtonPopoverActionButtonText:
+                    "text-slate-900 dark:text-white",
+                  userButtonPopoverActionButtonIcon:
+                    "text-slate-600 dark:text-slate-400",
                 },
               }}
             />
