@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useTranslations } from "@/i18n/use-translations";
+import { toast } from "sonner";
 
 export function ManageSubscriptionButton() {
   const [loading, setLoading] = useState(false);
@@ -21,12 +22,12 @@ export function ManageSubscriptionButton() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        alert("Erro ao acessar portal de pagamentos");
+        toast.error(t("dashboard.manageSubscription.errorPortal"));
         setLoading(false);
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao processar solicitação");
+      toast.error(t("dashboard.manageSubscription.errorRequest"));
       setLoading(false);
     }
   };
