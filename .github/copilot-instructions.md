@@ -2,7 +2,19 @@
 
 ## Architecture Overview
 
-**EzFin** is a personal finance management app built with **Next.js 16**, **Prisma ORM**, **Clerk authentication**, and **TailwindCSS**. The app tracks transactions, subscriptions, and savings goals.
+**EzFin** is a personal finance management app built with **Next.js 16**, **Prisma ORM + Accelerate**, **Clerk authentication**, and **TailwindCSS**. The app tracks transactions, subscriptions, and savings goals. Deployed on **Vercel** with **Supabase** (PostgreSQL) database.
+
+### Tech Stack
+
+- **Framework**: Next.js 16.1.5 (App Router, Turbopack)
+- **Database**: PostgreSQL (Supabase) + Prisma ORM 6.19.2
+- **Cache Layer**: Prisma Accelerate (global edge cache)
+- **Authentication**: Clerk
+- **Payments**: Stripe (subscriptions)
+- **Deployment**: Vercel (Edge Functions)
+- **Styling**: TailwindCSS + Shadcn UI (Radix UI primitives)
+- **Charts**: Recharts
+- **i18n**: Custom hook-based (pt/en)
 
 ### Core Data Model (Prisma)
 
@@ -55,24 +67,101 @@
 
 ### Database Access
 
-- Prisma Client instantiated in [../src/lib/db.ts](../src/lib/db.ts) as singleton (prevents multiple instances in dev)
-- Query pattern: `db.transaction.create()`, `db.user.findUnique()`, etc.
+- Prisma Client with **Accelerate extension** instantiated in [../src/lib/db.ts](../src/lib/db.ts) as singleton
+- **Always use `cacheStrategy`** in queries for optimal performance (see Performance section)
+- Query pattern: `db.transaction.create()`, `db.user.findUnique({ cacheStrategy: {...} })`, etc.
 - Relations cascade on delete (User deletion removes transactions/subscriptions/goals)
+- **Database Indexes**: All user-filtered queries have indexes on `userId`, `date`, `type` for fast lookups
+
+### Performance & Caching Strategy
+
+**Critical for production performance:**
+
+1. **Prisma Accelerate Cache** (global edge cache):
+
+```typescript
+// Short-lived data (transactions, aggregates)
+db.transaction.findMany({
+  where: { userId: user.id },
+  cacheStrategy: { ttl: 60, swr: 120 }, // Cache 60s, stale-while-revalidate 120s
+});
+
+// Long-lived data (subscriptions, goals)
+db.subscription.findMany({
+  where: { userId: user.id },
+  cacheStrategy: { ttl: 120, swr: 240 },
+});
+
+// Auth data (rarely changes)
+db.user.findUnique({
+  where: { email: user.email },
+  cacheStrategy: { ttl: 300, swr: 600 }, // 5min cache
+});
+```
+
+2. **Query Parallelization**:
+   - ALWAYS use `Promise.all()` for independent queries
+   - Example: Dashboard fetches 8 queries in parallel (not sequential)
+   - Reduces total time from sum of queries to longest single query
+
+3. **Database Indexes** (already configured):
+   - `Transaction`: `@@index([userId])`, `@@index([userId, date])`, `@@index([userId, type])`
+   - `Subscription`: `@@index([userId])`, `@@index([userId, active])`
+   - `Goal`: `@@index([userId])`
+
+4. **Loading States**:
+   - Use `loading.tsx` files for instant skeleton UI
+   - Users see layout immediately while data loads
 
 ## Build & Development
 
 **Scripts** (package.json):
 
 - `npm run dev` - Next.js dev server on localhost:3000
-- `npm run build` - Runs `prisma generate && next build` (IMPORTANT: prisma generate must run first)
+- `npm run build` - Runs `prisma generate --no-engine && next build` (optimized for Accelerate)
 - `npm start` - Production server
 - `npm run lint` - ESLint check
 
 **Setup**:
 
-1. Environment requires `DIRECT_URL` (PostgreSQL connection string)
+1. Environment requires:
+   - `DATABASE_URL` - Prisma Accelerate URL (starts with `prisma+postgres://`)
+   - `DIRECT_URL` - Direct PostgreSQL connection (for migrations only)
 2. Run `npm install` after cloning
-3. Prisma client auto-generated to `src/generated/prisma/`
+3. Prisma Client generated to `node_modules/@prisma/client` (not committed)
+
+**Deployment (Vercel)**:
+
+- Push to `main` branch triggers automatic deployment
+- Environment variables configured in Vercel dashboard
+- Build time: ~2 minutes
+- Cold start: <100ms (Vercel Edge Functions)
+- Hot path: <50ms
+
+**Environment Variables Required**:
+
+```bash
+# Database (Prisma Accelerate)
+DATABASE_URL=prisma+postgres://accelerate.prisma-data.net/?api_key=xxx
+DIRECT_URL=postgresql://user:pass@host:5432/db
+
+# Clerk Auth
+CLERK_SECRET_KEY=sk_xxx
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_xxx
+
+# Stripe
+STRIPE_SECRET_KEY=sk_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_xxx
+STRIPE_MONTHLY_PRICE_ID=price_xxx
+STRIPE_ANNUAL_PRICE_ID=price_xxx
+
+# Admin
+ADMIN_EMAILS=admin@example.com
+
+# App URL (Vercel provides automatically)
+NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+```
 
 ## Important Implementation Details
 
@@ -115,11 +204,51 @@ export async function createTransaction(formData: FormData) {
 ## Avoid Common Pitfalls
 
 - **Don't forget `revalidatePath()`** in server actions or changes won't appear immediately
+- **Always use `cacheStrategy`** in Prisma queries for optimal performance
 - **Always check `getEzFinUser()`** before accessing user data (can return null)
-- **Prisma must run before build**: `prisma generate` happens in build script
+- **Prisma must run before build**: `prisma generate --no-engine` happens in build script
 - **Use TailwindCSS + CVA** for component styling, not inline CSS
 - **Import from `@/components/ui/`** for shared components, not relative paths
 - **Server vs Client Components**: Use `"use server"` for actions, `"use client"` for interactive dialogs only when needed
+- **Parallel queries**: Use `Promise.all()` for independent database queries
+- **Cache TTL**: Short TTL (60s) for transactional data, longer (300s) for auth data
+
+## Performance Best Practices
+
+1. **Always parallelize independent queries**:
+
+```typescript
+// ✅ Good - parallel
+const [transactions, subscriptions, goals] = await Promise.all([
+  db.transaction.findMany({ where: {...}, cacheStrategy: {...} }),
+  db.subscription.findMany({ where: {...}, cacheStrategy: {...} }),
+  db.goal.findMany({ where: {...}, cacheStrategy: {...} }),
+]);
+
+// ❌ Bad - sequential
+const transactions = await db.transaction.findMany({...});
+const subscriptions = await db.subscription.findMany({...});
+const goals = await db.goal.findMany({...});
+```
+
+2. **Always add cacheStrategy to queries**:
+
+```typescript
+// ✅ Good
+const user = await db.user.findUnique({
+  where: { email },
+  cacheStrategy: { ttl: 300, swr: 600 },
+});
+
+// ❌ Bad - no cache
+const user = await db.user.findUnique({ where: { email } });
+```
+
+3. **Use appropriate TTL values**:
+   - Auth data: 300s (5 minutes)
+   - Transactions/aggregates: 60s (1 minute)
+   - Subscriptions/goals: 120s (2 minutes)
+   - Static configuration: 600s (10 minutes)
 
 ## Testing & Debugging
 
