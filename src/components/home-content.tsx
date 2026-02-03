@@ -16,9 +16,19 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useTranslations } from "@/i18n/use-translations";
+import { useState, useEffect } from "react";
 
 export function HomeContent() {
   const { t } = useTranslations();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // Evita mismatch de hidratação
+  }
 
   return (
     <main className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
