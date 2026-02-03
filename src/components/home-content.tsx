@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import {
   TrendingUp,
@@ -61,14 +61,14 @@ export function HomeContent() {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
             <SignedOut>
-              <SignInButton mode="modal">
+              <Link href="/sign-in">
                 <Button
                   size="sm"
                   className="bg-white text-slate-900 hover:bg-slate-100"
                 >
                   {t("home.signIn")}
                 </Button>
-              </SignInButton>
+              </Link>
             </SignedOut>
 
             <SignedIn>
@@ -104,7 +104,7 @@ export function HomeContent() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <SignedOut>
-              <SignInButton mode="modal">
+              <Link href="/sign-in">
                 <Button
                   size="lg"
                   className="text-base px-8 bg-white text-slate-900 hover:bg-slate-100"
@@ -112,7 +112,7 @@ export function HomeContent() {
                   {t("home.viewPlans")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </SignInButton>
+              </Link>
             </SignedOut>
 
             <SignedIn>
@@ -245,7 +245,7 @@ export function HomeContent() {
             </p>
 
             <SignedOut>
-              <SignInButton mode="modal">
+              <Link href="/sign-in">
                 <Button
                   size="lg"
                   variant="secondary"
@@ -254,7 +254,7 @@ export function HomeContent() {
                   {t("home.cta.choosePlan")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </SignInButton>
+              </Link>
             </SignedOut>
 
             <SignedIn>
