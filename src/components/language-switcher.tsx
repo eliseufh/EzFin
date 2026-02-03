@@ -52,7 +52,7 @@ export function LanguageSwitcher() {
       <Button
         variant="ghost"
         size="sm"
-        className="gap-2 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-800"
+        className="gap-2 text-white hover:bg-slate-800"
       >
         <Globe className="h-4 w-4" />
         <span className="font-semibold">PT</span>
@@ -66,14 +66,14 @@ export function LanguageSwitcher() {
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-800"
+          className="gap-2 text-white hover:bg-slate-800"
         >
           <Globe className="h-4 w-4" />
           <span className="font-semibold">{currentLanguage?.label}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-48 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
+        className="w-48 bg-slate-900 border-slate-700"
         align="end"
       >
         <div className="space-y-1">
@@ -83,8 +83,8 @@ export function LanguageSwitcher() {
               onClick={() => handleLanguageChange(lang.code)}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
                 currentLang === lang.code
-                  ? "bg-green-500/20 text-green-600 dark:text-green-400"
-                  : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
+                  ? "bg-green-500/20 text-green-400"
+                  : "text-slate-300 hover:bg-slate-800 hover:text-white"
               }`}
             >
               <span className="font-bold text-base">{lang.label}</span>
