@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 
 const isPublicRoute = createRouteMatcher([
   "/",
-  "/sign-in(.*)",
-  "/sign-up(.*)",
   "/api/webhooks(.*)",
   "/pricing",
 ]);
@@ -20,9 +18,8 @@ export default clerkMiddleware(async (auth, request) => {
 
   // Se não está logado e tenta acessar rota protegida
   if (!userId && !isPublicRoute(request)) {
-    const signInUrl = new URL("/sign-in", request.url);
-    signInUrl.searchParams.set("redirect_url", pathname);
-    response = NextResponse.redirect(signInUrl);
+    // Redireciona para home em vez de /sign-in
+    response = NextResponse.redirect(new URL("/", request.url));
   }
   else {
     response = NextResponse.next();
