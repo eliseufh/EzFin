@@ -22,10 +22,11 @@ export default async function DashboardPage(props: DashboardProps) {
   }
 
   // 3. Verificar subscrição (usa cache se já foi buscado recentemente)
-  const hasActiveSubscription = await checkSubscription();
-  if (!hasActiveSubscription) {
-    redirect("/pricing");
-  }
+  // TEMPORARIAMENTE DESATIVADO PARA DESENVOLVIMENTO
+  // const hasActiveSubscription = await checkSubscription();
+  // if (!hasActiveSubscription) {
+  //   redirect("/pricing");
+  // }
 
   // --- LÓGICA DE DATAS DINÂMICA ---
   const now = new Date();
