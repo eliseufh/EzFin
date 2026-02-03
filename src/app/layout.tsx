@@ -28,8 +28,6 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-      signInFallbackRedirectUrl="/dashboard"
-      signUpFallbackRedirectUrl="/dashboard"
       appearance={{
         baseTheme: undefined,
         variables: {
