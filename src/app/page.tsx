@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 // Força renderização dinâmica para verificar auth em tempo real
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function Home() {
   const user = await currentUser();
